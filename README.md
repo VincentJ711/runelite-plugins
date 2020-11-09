@@ -1,0 +1,2 @@
+### item-carts
+Allows players to create/read/update carts that contain items and amounts they would like to attain. Helps keep track of what you still need to collect. Originally created to help ironmen collect items for quests/diaries.
