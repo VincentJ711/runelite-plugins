@@ -26,6 +26,7 @@ dependencies {
   testImplementation("net.runelite:client:$runeLiteVersion") {
     exclude(group = "ch.qos.logback", module = "logback-classic")
   }
+  testImplementation(kotlin("test-junit"))
 }
 
 tasks.compileKotlin {
