@@ -7,24 +7,60 @@ import net.runelite.client.util.SwingUtil
 import javax.swing.JFrame
 
 private class ViewTest : JFrame() {
-  val cartb = RawCart("b", emptyList())
   val rootPanel = object : PluginPanel() {}
   val modelManager = ModelManager(rootPanel)
 
   init {
     title = "View Test"
     setSize(500, 900)
-    setLocationRelativeTo(null)
     defaultCloseOperation = EXIT_ON_CLOSE
+
+    add(rootPanel)
+    isVisible = true
 
     modelManager.setCarts(
       listOf(
-        RawCart("a", emptyList()),
-        cartb
+        RawCart("alpha", emptyList()),
+        RawCart("bravo", emptyList())
       )
     )
 
-    add(rootPanel)
+    Thread {
+      val waitTime = 3000L
+
+      println("adding 2 carts")
+      Thread.sleep(waitTime)
+      modelManager.addCarts(
+        listOf(
+          RawCart("charlie", emptyList()),
+          RawCart("delta", emptyList())
+        )
+      )
+
+      println("updating carts at index 0 and 2")
+      assert(modelManager.carts.size > 2)
+      Thread.sleep(waitTime)
+      val cart0 = modelManager.carts[0]
+      val cart2 = modelManager.carts[2]
+      modelManager.updateCarts(
+        listOf(
+          cart2.copy(name = "${cart2.name} ${cart2.name}"),
+          cart0.copy(name = "${cart0.name} ${cart0.name}")
+        )
+      )
+
+      println("removing cart at index 1")
+      modelManager.carts.getOrNull(1)?.let {
+        Thread.sleep(waitTime)
+        modelManager.removeCart(it.uid)
+      }
+
+      println("resetting carts")
+      Thread.sleep(waitTime)
+      modelManager.setCarts((1 until 100).map {
+        RawCart("cart #${it}", emptyList())
+      })
+    }.start()
   }
 }
 
@@ -32,25 +68,5 @@ fun main() = ontoEDT {
   SwingUtil.setupDefaults()
   SwingUtil.setTheme(SubstanceRuneLiteLookAndFeel())
   SwingUtil.setFont(FontManager.getRunescapeFont())
-  val frame = ViewTest()
-  frame.isVisible = true
-
-  Thread {
-    println(Thread.currentThread())
-    Thread.sleep(1000)
-    val xxx = (1 until 4).map {
-      RawCart("cart #${it}", emptyList())
-    }
-    frame.modelManager.setCarts(xxx)
-    // frame.modelManager.addCarts(
-    //   listOf(
-    //     Cart("alpha", emptyList(), false)
-    //   )
-    // )
-    // frame.modelManager.removeCart(frame.cartb)
-    // frame.modelManager.updateCart(
-    //   frame.cartb,
-    //   frame.cartb.copy(name = "was b!!")
-    // )
-  }.start()
+  ViewTest()
 }

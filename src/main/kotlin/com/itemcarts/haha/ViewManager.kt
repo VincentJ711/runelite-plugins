@@ -21,10 +21,8 @@ interface IViewManager {
 
 class ViewManager(
   private val modelManager: ModelManager,
-  rootPanel: Container
+  private val rootPanel: Container
 ) : IViewManager {
-  // TODO what happens to indicies when we add a dummy
-  //  panel to bottom of cartsListPanel ??
   private val cartsView = JPanel()
   private val summaryView = JPanel()
   private val editCartView = JPanel()
@@ -37,12 +35,16 @@ class ViewManager(
 
   // setup the carts view
   init {
-    val scrollPane = JScrollPane(cartsListPanel)
-    // scrollPane.verticalScrollBarPolicy = JScrollPane.VERTICAL_SCROLLBAR_ALWAYS
+    val scrollPaneChild = JPanel(BorderLayout())
+    val scrollPane = JScrollPane(scrollPaneChild)
+    val dummyPanel = JPanel()
 
     cartsListPanel.background = ColorScheme.LIGHT_GRAY_COLOR
     cartsListPanel.border = EmptyBorder(8, 8, 8, 8)
     cartsListPanel.layout = GridLayout(0, 1, 0, 8)
+
+    scrollPaneChild.add(cartsListPanel, BorderLayout.NORTH)
+    scrollPaneChild.add(dummyPanel, BorderLayout.SOUTH)
 
     cartsView.layout = BoxLayout(cartsView, BoxLayout.Y_AXIS)
     cartsView.add(scrollPane)
@@ -65,6 +67,7 @@ class ViewManager(
     cartsView.isVisible = view == View.CARTS
     summaryView.isVisible = view == View.SUMMARY
     editCartView.isVisible = view == View.EDIT_CART
+    refresh()
   }
 
   override fun setCarts(carts: Iterable<Cart>) = ontoEDT {
@@ -79,7 +82,6 @@ class ViewManager(
       val index = cartsListPanel.components.indexOfFirst { it == currComp }
 
       if (index != -1) {
-        // TODO what if we update index 0 when we only have 1 component in the pane?
         val nextComp = renderCart(next)
         cartComponents[next.uid] = nextComp
         cartsListPanel.remove(index)
@@ -87,7 +89,7 @@ class ViewManager(
       }
     }
 
-    refresh(cartsListPanel.parent)
+    refresh()
     updateSummary()
   }
 
@@ -95,7 +97,7 @@ class ViewManager(
     val comp = cartComponents[uid] ?: return@ontoEDT
     cartsListPanel.remove(comp)
     cartComponents.remove(uid)
-    refresh(cartsListPanel.parent)
+    refresh()
     updateSummary()
   }
 
@@ -107,13 +109,13 @@ class ViewManager(
         cartComponents[cart.uid] = comp
       }
     }
-    refresh(cartsListPanel.parent)
+    refresh()
     updateSummary()
   }
 
-  private fun refresh(component: Component) {
-    component.validate()
-    component.repaint()
+  private fun refresh() {
+    rootPanel.validate()
+    rootPanel.repaint()
   }
 
   /** refreshes the summary view with latest summary */
@@ -128,9 +130,6 @@ class ViewManager(
     val label = JLabel(cart.name)
     panel.background = ColorScheme.DARKER_GRAY_COLOR
     panel.border = EmptyBorder(8, 8, 8, 8)
-    // panel.preferredSize = Dimension(48, 48)
-    panel.maximumSize = Dimension(48, 48)
-    panel.preferredSize = Dimension(48, 48)
     panel.add(label)
     return panel
   }

@@ -76,7 +76,6 @@ fun calcRequiredAmt(itemsWithSameName: Collection<CartItem>): Long {
  * dispatch thread.
  */
 fun ontoEDT(cb: () -> Unit) {
-  println("ontoEDT running...")
   if (SwingUtilities.isEventDispatchThread()) {
     cb()
   } else {

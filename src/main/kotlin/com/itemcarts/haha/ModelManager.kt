@@ -14,7 +14,8 @@ class ModelManager(rootPanel: Container) : IModelManager {
   private val viewManager = ViewManager(this, rootPanel)
   private var itemsInBank = mapOf<String, Long>()
   private var itemsOnPlayer = mapOf<String, Long>()
-  private var carts = listOf<Cart>()
+  var carts = listOf<Cart>()
+    private set
   var summary = mapOf<String, SummaryItem>()
     private set
 
