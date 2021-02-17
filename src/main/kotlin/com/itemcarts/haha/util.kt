@@ -1,5 +1,19 @@
 package com.itemcarts.haha
 
+import javax.swing.SwingUtilities
+
+/** allows you to modify a list during traversal */
+inline fun <T> MutableList<T>.mapInPlace(mutator: (T) -> T) {
+  val iterate = this.listIterator()
+  while (iterate.hasNext()) {
+    val oldValue = iterate.next()
+    val newValue = mutator(oldValue)
+    if (newValue !== oldValue) {
+      iterate.set(newValue)
+    }
+  }
+}
+
 /**
  * returns a map with a key for each item name in the given carts whose
  * value is an object notably containing the total required amount needed
@@ -11,7 +25,7 @@ package com.itemcarts.haha
  * current amount. Therefore, this assumes rightly so that the given cart items
  * with the same name all share the same current amount.
  */
-fun calcSummary(carts: List<Cart>): Map<String, SummaryItem> {
+fun calcSummary(carts: Iterable<Cart>): Map<String, SummaryItem> {
   val summary = mutableMapOf<String, SummaryItem>()
 
   // ensure items with the highest reusableAmt's go first to minimize
@@ -55,4 +69,17 @@ fun calcRequiredAmt(itemsWithSameName: Collection<CartItem>): Long {
   }
 
   return needed
+}
+
+/**
+ * ensures the given callback is executed on the swing event
+ * dispatch thread.
+ */
+fun ontoEDT(cb: () -> Unit) {
+  println("ontoEDT running...")
+  if (SwingUtilities.isEventDispatchThread()) {
+    cb()
+  } else {
+    SwingUtilities.invokeLater(Runnable(cb))
+  }
 }
