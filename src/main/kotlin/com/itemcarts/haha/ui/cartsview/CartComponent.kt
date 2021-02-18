@@ -39,7 +39,7 @@ class CartComponent(
     topPanel.add(cartNameLabel, BorderLayout.CENTER)
 
     background = Color.RED
-    border = EmptyBorder(8, 8, 8, 8)
+    border = EmptyBorder(0, 0, 0, 0)
     add(topPanel, BorderLayout.NORTH)
   }
 

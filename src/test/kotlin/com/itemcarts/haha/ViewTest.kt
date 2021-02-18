@@ -4,6 +4,7 @@ import net.runelite.client.ui.FontManager
 import net.runelite.client.ui.PluginPanel
 import net.runelite.client.ui.skin.SubstanceRuneLiteLookAndFeel
 import net.runelite.client.util.SwingUtil
+import org.pushingpixels.substance.internal.SubstanceSynapse
 import javax.swing.JFrame
 
 private class ViewTest : JFrame() {
@@ -32,7 +33,7 @@ private class ViewTest : JFrame() {
 
 
     Thread {
-      val waitTime = 5000L
+      val waitTime = 1000L
 
       println("adding 2 carts")
       Thread.sleep(waitTime)
@@ -61,11 +62,11 @@ private class ViewTest : JFrame() {
         modelManager.removeCart(it.uid)
       }
 
-      println("resetting carts")
-      Thread.sleep(waitTime)
-      modelManager.setCarts((1 until 100).map {
-        RawCart("cart #${it}", emptyList())
-      })
+      // println("resetting carts")
+      // Thread.sleep(waitTime)
+      // modelManager.setCarts((1 until 100).map {
+      //   RawCart("cart #${it}", emptyList())
+      // })
     }.start()
   }
 }
@@ -74,5 +75,7 @@ fun main() = ontoEDT {
   SwingUtil.setupDefaults()
   SwingUtil.setTheme(SubstanceRuneLiteLookAndFeel())
   SwingUtil.setFont(FontManager.getRunescapeFont())
-  ViewTest()
+  val frame = ViewTest()
+  // the above theme screws up the coloring... this make sure colors are true...
+  frame.rootPanel.putClientProperty(SubstanceSynapse.COLORIZATION_FACTOR, 1.0)
 }

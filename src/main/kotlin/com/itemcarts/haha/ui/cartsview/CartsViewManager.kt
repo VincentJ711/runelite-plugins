@@ -38,8 +38,8 @@ class CartsViewManager : ICartsViewManager {
     val scrollPane = JScrollPane(scrollPaneChild)
     val dummyPanel = JPanel()
 
-    cartsListPanel.background = ColorScheme.LIGHT_GRAY_COLOR
-    cartsListPanel.border = EmptyBorder(8, 8, 8, 8)
+    cartsListPanel.background = ColorScheme.DARK_GRAY_COLOR
+    cartsListPanel.border = EmptyBorder(8, 0, 8, 0)
     cartsListPanel.layout = GridLayout(0, 1, 0, 8)
 
     scrollPaneChild.add(cartsListPanel, BorderLayout.NORTH)
