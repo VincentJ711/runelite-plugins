@@ -9,7 +9,7 @@ import javax.swing.JLabel
 import javax.swing.JPanel
 import javax.swing.border.EmptyBorder
 
-class CartComponent(
+class CartPanel(
   private val cart: Cart,
   private val expandedCarts: MutableSet<String>
 ) : JPanel(BorderLayout()), Destroyable {

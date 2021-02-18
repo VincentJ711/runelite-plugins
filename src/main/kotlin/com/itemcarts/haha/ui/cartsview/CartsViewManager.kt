@@ -29,7 +29,7 @@ class CartsViewManager : ICartsViewManager {
   private val cartsListPanel = JPanel()
   private val expandedCarts = mutableSetOf<String>()
   private val cartComponents =
-    mutableMapOf<String, CartComponent>()
+    mutableMapOf<String, CartPanel>()
   val rootPanel = JPanel()
 
   init {
@@ -63,7 +63,7 @@ class CartsViewManager : ICartsViewManager {
       val index = cartsListPanel.components.indexOfFirst { it == currComp }
 
       if (index != -1) {
-        val nextComp = CartComponent(next, expandedCarts)
+        val nextComp = CartPanel(next, expandedCarts)
         currComp.onBeforeDestroy()
         cartComponents[next.uid] = nextComp
         cartsListPanel.remove(index)
@@ -82,7 +82,7 @@ class CartsViewManager : ICartsViewManager {
   override fun addCarts(carts: Iterable<Cart>) = ontoEDT {
     for (cart in carts) {
       if (!cartComponents.containsKey(cart.uid)) {
-        val comp = CartComponent(cart, expandedCarts)
+        val comp = CartPanel(cart, expandedCarts)
         cartsListPanel.add(comp)
         cartComponents[cart.uid] = comp
       }
