@@ -61,8 +61,7 @@ class UtilTest {
               consumableAmt = 2,
               currentAmt = 5
             )
-          ),
-          false
+          )
         ),
         Cart(
           "cart2",
@@ -73,8 +72,7 @@ class UtilTest {
               consumableAmt = 20,
               currentAmt = 0
             )
-          ),
-          false
+          )
         )
       )
     )

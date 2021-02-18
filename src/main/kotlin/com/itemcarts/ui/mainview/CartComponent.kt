@@ -2,7 +2,7 @@ package com.itemcarts.ui.mainview
 
 import com.itemcarts.Cart
 import com.itemcarts.IViewsCtrl
-import com.itemcarts.ui.Destroyable
+import com.itemcarts.haha.ui.Destroyable
 import java.awt.BorderLayout
 import java.awt.Color
 import java.awt.Font

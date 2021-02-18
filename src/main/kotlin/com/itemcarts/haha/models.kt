@@ -1,7 +1,6 @@
 package com.itemcarts.haha
 
-import java.rmi.server.UID
-import java.util.*
+import java.util.UUID
 
 data class RawCartItem(
   val name: String,
@@ -35,7 +34,6 @@ data class RawCart(
 data class Cart(
   val name: String,
   val items: List<CartItem>,
-  val expandedInCartsView: Boolean,
   val uid: String = "${UUID.randomUUID()}"
 ) {
   val completed = items.all { it.completed }

@@ -213,7 +213,7 @@ class ItemCartsPlugin : Plugin() {
 
   override fun shutDown() {
     tryPersistingModels()
-    viewsCtrl.onBeforeDestroy()
+    // viewsCtrl.onBeforeDestroy()
     clientToolbar.removeNavigation(navButton)
     modelsWriterThread.stop()
   }

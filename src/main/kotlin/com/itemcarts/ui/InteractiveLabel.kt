@@ -1,5 +1,6 @@
 package com.itemcarts.ui
 
+import com.itemcarts.haha.ui.Destroyable
 import net.runelite.client.ui.ColorScheme
 import java.awt.Color
 import java.awt.Font

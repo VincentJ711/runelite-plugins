@@ -1,12 +1,11 @@
 package com.itemcarts
 
-import com.itemcarts.ui.Destroyable
 import com.itemcarts.ui.mainview.MainView
 import net.runelite.client.ui.PluginPanel
 import javax.swing.JPanel
 import javax.swing.SwingUtilities
 
-interface IViewsCtrl : Destroyable {
+interface IViewsCtrl {
   fun setModel(uname: String, model: Model)
   fun toggleExpandCart(cart: Cart)
   fun editCart(cart: Cart)
@@ -17,7 +16,7 @@ interface IViewsCtrl : Destroyable {
 }
 
 class ViewsCtrl(
-    private val modelsCtrl: IModelsCtrl
+  private val modelsCtrl: IModelsCtrl
 ) : PluginPanel(), IViewsCtrl {
   private var uname: String? = null
   private var model: Model? = null

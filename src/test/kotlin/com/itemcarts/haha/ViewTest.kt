@@ -21,12 +21,18 @@ private class ViewTest : JFrame() {
     modelManager.setCarts(
       listOf(
         RawCart("alpha", emptyList()),
-        RawCart("bravo", emptyList())
+        RawCart(
+          "bravo", listOf(
+            RawCartItem("Abyssal Whip", 0, 10),
+            RawCartItem("Zammy Hasta", 0, 1)
+          )
+        )
       )
     )
 
+
     Thread {
-      val waitTime = 3000L
+      val waitTime = 5000L
 
       println("adding 2 carts")
       Thread.sleep(waitTime)

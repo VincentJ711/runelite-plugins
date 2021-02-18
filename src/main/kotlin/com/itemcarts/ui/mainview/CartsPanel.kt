@@ -2,7 +2,7 @@ package com.itemcarts.ui.mainview
 
 import com.itemcarts.IViewsCtrl
 import com.itemcarts.Model
-import com.itemcarts.ui.Destroyable
+import com.itemcarts.haha.ui.Destroyable
 import javax.swing.BoxLayout
 import javax.swing.JPanel
 

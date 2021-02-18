@@ -12,7 +12,7 @@ interface ItemCartsConfig : Config {
     description = "",
     hidden = true
   )
-  @JvmDefault
+  // TODO @JvmDefault
   fun models() = ""
 
   @ConfigItem(
