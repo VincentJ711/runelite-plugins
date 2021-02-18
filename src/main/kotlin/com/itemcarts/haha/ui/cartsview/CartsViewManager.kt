@@ -5,7 +5,6 @@ import com.itemcarts.haha.ontoEDT
 import com.itemcarts.haha.ui.UiManager
 import net.runelite.client.ui.ColorScheme
 import java.awt.BorderLayout
-import java.awt.GridLayout
 import javax.swing.BoxLayout
 import javax.swing.JPanel
 import javax.swing.JScrollPane
@@ -64,7 +63,7 @@ class CartsViewManager : ICartsViewManager {
       val index = cartsListPanel.components.indexOfFirst { it == currComp }
 
       if (index != -1) {
-        val nextComp = CartComponent(next, uiManager, expandedCarts)
+        val nextComp = CartComponent(next, expandedCarts)
         currComp.onBeforeDestroy()
         cartComponents[next.uid] = nextComp
         cartsListPanel.remove(index)
@@ -83,7 +82,7 @@ class CartsViewManager : ICartsViewManager {
   override fun addCarts(carts: Iterable<Cart>) = ontoEDT {
     for (cart in carts) {
       if (!cartComponents.containsKey(cart.uid)) {
-        val comp = CartComponent(cart, uiManager, expandedCarts)
+        val comp = CartComponent(cart, expandedCarts)
         cartsListPanel.add(comp)
         cartComponents[cart.uid] = comp
       }
