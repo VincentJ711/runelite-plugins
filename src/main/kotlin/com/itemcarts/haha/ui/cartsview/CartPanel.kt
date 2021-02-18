@@ -2,7 +2,7 @@ package com.itemcarts.haha.ui.cartsview
 
 import com.itemcarts.haha.Cart
 import com.itemcarts.haha.ui.Destroyable
-import com.itemcarts.haha.ui.shared.TEXT_SECONDARY
+import com.itemcarts.haha.ui.TEXT_SECONDARY
 import java.awt.BorderLayout
 import java.awt.GridBagLayout
 import javax.swing.JLabel
@@ -15,7 +15,7 @@ class CartPanel(
 ) : JPanel(BorderLayout()), Destroyable {
   private val btmPanel = JPanel(BorderLayout())
   private val statusBtn = StatusButton(cart.completed)
-  private val cartNameLabel = CartNameLabel(cart.name) { toggleExpansion() }
+  private val cartNameBtn = CartNameButton(cart.name) { toggleExpansion() }
   private val editBtn = EditCartButton {
     TODO()
   }
@@ -30,7 +30,7 @@ class CartPanel(
 
     border = EmptyBorder(0, 0, 8, 0)
 
-    topPanel.add(cartNameLabel, BorderLayout.CENTER)
+    topPanel.add(cartNameBtn, BorderLayout.CENTER)
     topPanel.add(statusBtn, BorderLayout.EAST)
     add(topPanel, BorderLayout.NORTH)
 
@@ -61,7 +61,7 @@ class CartPanel(
   }
 
   override fun onBeforeDestroy() {
-    cartNameLabel.onBeforeDestroy()
+    cartNameBtn.onBeforeDestroy()
     statusBtn.onBeforeDestroy()
     deleteBtn.onBeforeDestroy()
     editBtn.onBeforeDestroy()

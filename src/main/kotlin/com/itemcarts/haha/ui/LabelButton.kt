@@ -1,6 +1,5 @@
-package com.itemcarts.haha.ui.shared
+package com.itemcarts.haha.ui
 
-import com.itemcarts.haha.ui.Destroyable
 import net.runelite.client.ui.ColorScheme
 import java.awt.Color
 import java.awt.Dimension

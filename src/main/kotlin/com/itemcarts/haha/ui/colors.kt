@@ -1,4 +1,4 @@
-package com.itemcarts.haha.ui.shared
+package com.itemcarts.haha.ui
 
 import java.awt.Color
 

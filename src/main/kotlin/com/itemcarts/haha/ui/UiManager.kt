@@ -27,7 +27,8 @@ class UiManager private constructor(
   private val cartsViewManager: CartsViewManager,
   private val summaryViewManager: SummaryViewManager,
   private val cartViewManager: CartViewManager
-) : IUiManager,
+) :
+  IUiManager,
   ICartsViewManager by cartsViewManager,
   ISummaryViewManager by summaryViewManager,
   ICartViewManager by cartViewManager {
@@ -49,7 +50,6 @@ class UiManager private constructor(
     rootPanel.add(cartsViewManager.rootPanel)
     rootPanel.add(summaryViewManager.rootPanel)
     rootPanel.add(cartViewManager.rootPanel)
-    rootPanel.isOpaque = true
   }
 
   override fun setView(view: View) = ontoEDT {
