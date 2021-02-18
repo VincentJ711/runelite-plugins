@@ -40,10 +40,10 @@ class CartsViewManager : ICartsViewManager {
 
     cartsListPanel.background = ColorScheme.DARK_GRAY_COLOR
     cartsListPanel.border = EmptyBorder(8, 0, 8, 0)
-    cartsListPanel.layout = GridLayout(0, 1, 0, 8)
+    cartsListPanel.layout = BoxLayout(cartsListPanel, BoxLayout.Y_AXIS)
 
     scrollPaneChild.add(cartsListPanel, BorderLayout.NORTH)
-    scrollPaneChild.add(dummyPanel, BorderLayout.SOUTH)
+    scrollPaneChild.add(dummyPanel, BorderLayout.CENTER)
 
     rootPanel.layout = BoxLayout(rootPanel, BoxLayout.Y_AXIS)
     rootPanel.add(scrollPane)
@@ -64,7 +64,7 @@ class CartsViewManager : ICartsViewManager {
       val index = cartsListPanel.components.indexOfFirst { it == currComp }
 
       if (index != -1) {
-        val nextComp = CartComponent(next, expandedCarts)
+        val nextComp = CartComponent(next, uiManager, expandedCarts)
         currComp.onBeforeDestroy()
         cartComponents[next.uid] = nextComp
         cartsListPanel.remove(index)
@@ -83,7 +83,7 @@ class CartsViewManager : ICartsViewManager {
   override fun addCarts(carts: Iterable<Cart>) = ontoEDT {
     for (cart in carts) {
       if (!cartComponents.containsKey(cart.uid)) {
-        val comp = CartComponent(cart, expandedCarts)
+        val comp = CartComponent(cart, uiManager, expandedCarts)
         cartsListPanel.add(comp)
         cartComponents[cart.uid] = comp
       }

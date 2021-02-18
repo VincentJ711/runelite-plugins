@@ -33,7 +33,7 @@ private class ViewTest : JFrame() {
 
 
     Thread {
-      val waitTime = 1000L
+      val waitTime = 2500L
 
       println("adding 2 carts")
       Thread.sleep(waitTime)
