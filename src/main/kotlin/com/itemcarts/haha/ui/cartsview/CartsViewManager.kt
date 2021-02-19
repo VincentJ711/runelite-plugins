@@ -1,6 +1,7 @@
 package com.itemcarts.haha.ui.cartsview
 
 import com.itemcarts.haha.Cart
+import com.itemcarts.haha.ModelManager
 import com.itemcarts.haha.ontoEDT
 import com.itemcarts.haha.ui.UiManager
 import net.runelite.client.ui.ColorScheme
@@ -24,7 +25,9 @@ interface ICartsViewManager {
   fun addCarts(carts: Iterable<Cart>)
 }
 
-class CartsViewManager : ICartsViewManager {
+class CartsViewManager(
+  private val modelManager: ModelManager,
+) : ICartsViewManager {
   lateinit var uiManager: UiManager
   private val cartsListPanel = JPanel()
   private val expandedCarts = mutableSetOf<String>()
@@ -63,7 +66,7 @@ class CartsViewManager : ICartsViewManager {
       val index = cartsListPanel.components.indexOfFirst { it == currComp }
 
       if (index != -1) {
-        val nextComp = CartPanel(next, expandedCarts)
+        val nextComp = CartPanel(uiManager, modelManager, next, expandedCarts)
         currComp.onBeforeDestroy()
         cartComponents[next.uid] = nextComp
         cartsListPanel.remove(index)
@@ -82,7 +85,7 @@ class CartsViewManager : ICartsViewManager {
   override fun addCarts(carts: Iterable<Cart>) = ontoEDT {
     for (cart in carts) {
       if (!cartComponents.containsKey(cart.uid)) {
-        val comp = CartPanel(cart, expandedCarts)
+        val comp = CartPanel(uiManager, modelManager, cart, expandedCarts)
         cartsListPanel.add(comp)
         cartComponents[cart.uid] = comp
       }

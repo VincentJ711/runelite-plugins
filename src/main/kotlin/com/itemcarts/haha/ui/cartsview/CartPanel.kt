@@ -1,24 +1,24 @@
 package com.itemcarts.haha.ui.cartsview
 
 import com.itemcarts.haha.Cart
+import com.itemcarts.haha.ModelManager
 import com.itemcarts.haha.ui.Destroyable
+import com.itemcarts.haha.ui.UiManager
 import java.awt.BorderLayout
 import javax.swing.JPanel
 import javax.swing.border.EmptyBorder
 
 class CartPanel(
+  private val uiManager: UiManager,
+  private val modelManager: ModelManager,
   private val cart: Cart,
   private val expandedCarts: MutableSet<String>
 ) : JPanel(BorderLayout()), Destroyable {
   private val btmPanel = JPanel(BorderLayout())
   private val statusBtn = StatusButton(cart.completed)
   private val cartNameBtn = CartNameButton(cart.name) { toggleExpansion() }
-  private val editBtn = EditCartButton {
-    TODO()
-  }
-  private val deleteBtn = DeleteCartButton {
-    TODO()
-  }
+  private val editBtn = EditCartButton { uiManager.goToEditCartView(cart) }
+  private val deleteBtn = DeleteCartButton { modelManager.removeCart(cart.uid) }
 
   init {
     val topPanel = JPanel(BorderLayout())
@@ -33,13 +33,13 @@ class CartPanel(
 
     btmPanel.add(cartItemsPanel, BorderLayout.NORTH)
 
-    ctrlPanel.add(editBtn, BorderLayout.WEST)
+    ctrlPanel.add(deleteBtn, BorderLayout.WEST)
     ctrlPanel.add(JPanel(), BorderLayout.CENTER)
-    ctrlPanel.add(deleteBtn, BorderLayout.EAST)
+    ctrlPanel.add(editBtn, BorderLayout.EAST)
     btmPanel.add(ctrlPanel, BorderLayout.SOUTH)
 
     btmPanel.border = EmptyBorder(8, 0, 0, 0)
-    btmPanel.isVisible = true // expandedCarts.contains(cart.uid) TODO
+    btmPanel.isVisible = expandedCarts.contains(cart.uid)
     add(btmPanel, BorderLayout.SOUTH)
   }
 

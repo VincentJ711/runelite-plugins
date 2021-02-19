@@ -29,12 +29,7 @@ private class UiTest : JFrame() {
         ),
         RawCart(
           "alpha", listOf(
-            RawCartItem(
-              "lolasf asdfa asdf asdfawe asdfasfd wef asdfas asdfa asdf asdfa  sadf",
-              0,
-              10
-            ),
-            RawCartItem("nice", 1, 1234345)
+            RawCartItem("Tinderbox", 1, 0)
           )
         )
       )
@@ -47,7 +42,8 @@ private class UiTest : JFrame() {
       Thread.sleep(waitTime)
       modelManager.updateItems(
         mutableMapOf(), mapOf(
-          "Abyssal Whip" to 1234L
+          "Abyssal Whip" to 1234L,
+          "Tinderbox" to 1L
         )
       )
 
@@ -81,7 +77,12 @@ private class UiTest : JFrame() {
       // println("resetting carts")
       // Thread.sleep(waitTime)
       // modelManager.setCarts((1 until 100).map {
-      //   RawCart("cart #${it}", emptyList())
+      //   RawCart(
+      //     "cart #${it}", listOf(
+      //       RawCartItem("Abyssal Whip", 0, 10),
+      //       RawCartItem("Zammy Hasta", 1, 1234345)
+      //     )
+      //   )
       // })
     }.start()
   }

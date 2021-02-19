@@ -1,5 +1,6 @@
 package com.itemcarts.haha.ui
 
+import com.itemcarts.haha.Cart
 import com.itemcarts.haha.ModelManager
 import com.itemcarts.haha.ontoEDT
 import com.itemcarts.haha.ui.cartsview.CartsViewManager
@@ -17,7 +18,19 @@ enum class View {
 }
 
 interface IUiManager {
-  fun setView(view: View)
+  /** takes you to the carts view */
+  fun goToCartsView()
+
+  /** takes you to the summary view */
+  fun goToSummaryView()
+
+  /** takes you to the cart view to edit the given cart */
+  fun goToEditCartView(cart: Cart)
+
+  /** takes you to the cart view to create a new cart */
+  fun goToAddCartView()
+
+  /** repaints the root panel (most likely the plugin panel) */
   fun repaint()
 }
 
@@ -36,7 +49,7 @@ class UiManager private constructor(
   constructor(rootPanel: JPanel, modelManager: ModelManager) : this(
     rootPanel,
     modelManager,
-    CartsViewManager(),
+    CartsViewManager(modelManager),
     SummaryViewManager(),
     CartViewManager()
   ) {
@@ -52,15 +65,31 @@ class UiManager private constructor(
     rootPanel.add(cartViewManager.rootPanel)
   }
 
-  override fun setView(view: View) = ontoEDT {
-    cartsViewManager.rootPanel.isVisible = view == View.CARTS
-    summaryViewManager.rootPanel.isVisible = view == View.SUMMARY
-    cartViewManager.rootPanel.isVisible = view == View.EDIT_CART
-    repaint()
+  override fun goToCartsView() = ontoEDT {
+    TODO("Not yet implemented")
+  }
+
+  override fun goToSummaryView() = ontoEDT {
+    TODO("Not yet implemented")
+  }
+
+  override fun goToEditCartView(cart: Cart) = ontoEDT {
+    TODO("Not yet implemented")
+  }
+
+  override fun goToAddCartView() {
+    TODO("Not yet implemented")
   }
 
   override fun repaint() = ontoEDT {
     rootPanel.revalidate()
     rootPanel.repaint()
+  }
+
+  private fun setView(view: View) = ontoEDT {
+    cartsViewManager.rootPanel.isVisible = view == View.CARTS
+    summaryViewManager.rootPanel.isVisible = view == View.SUMMARY
+    cartViewManager.rootPanel.isVisible = view == View.EDIT_CART
+    repaint()
   }
 }
