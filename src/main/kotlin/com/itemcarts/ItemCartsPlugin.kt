@@ -188,7 +188,7 @@ class ItemCartsPlugin : Plugin() {
 
   // startup sometimes isnt called on client thread...?
   private fun createNavButton(panel: PluginPanel): NavigationButton {
-    val icon = ImageUtil.getResourceStreamFromClass(javaClass, "/navicon.png")
+    val icon = ImageUtil.loadImageResource(javaClass, "/navicon.png")
     return NavigationButton.builder()
         .tooltip("Item Carts")
         .icon(icon)
