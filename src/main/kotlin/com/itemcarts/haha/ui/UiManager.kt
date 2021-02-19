@@ -1,7 +1,6 @@
 package com.itemcarts.haha.ui
 
 import com.itemcarts.haha.Cart
-import com.itemcarts.haha.ModelManager
 import com.itemcarts.haha.ontoEDT
 import com.itemcarts.haha.ui.cartsview.CartsViewManager
 import com.itemcarts.haha.ui.cartsview.ICartsViewManager
@@ -9,7 +8,8 @@ import com.itemcarts.haha.ui.cartview.CartViewManager
 import com.itemcarts.haha.ui.cartview.ICartViewManager
 import com.itemcarts.haha.ui.summaryview.ISummaryViewManager
 import com.itemcarts.haha.ui.summaryview.SummaryViewManager
-import javax.swing.JPanel
+import javax.inject.Inject
+import javax.inject.Singleton
 
 enum class View {
   CARTS,
@@ -30,13 +30,13 @@ interface IUiManager {
   /** takes you to the cart view to create a new cart */
   fun goToAddCartView()
 
-  /** repaints the root panel (most likely the plugin panel) */
+  /** repaints the root plugin panel */
   fun repaint()
 }
 
-class UiManager private constructor(
-  private val rootPanel: JPanel,
-  private val modelManager: ModelManager,
+@Singleton
+class UiManager @Inject constructor(
+  private val pluginPanel: ItemCartsPluginPanel,
   private val cartsViewManager: CartsViewManager,
   private val summaryViewManager: SummaryViewManager,
   private val cartViewManager: CartViewManager
@@ -46,23 +46,11 @@ class UiManager private constructor(
   ISummaryViewManager by summaryViewManager,
   ICartViewManager by cartViewManager {
 
-  constructor(rootPanel: JPanel, modelManager: ModelManager) : this(
-    rootPanel,
-    modelManager,
-    CartsViewManager(modelManager),
-    SummaryViewManager(),
-    CartViewManager()
-  ) {
-    cartsViewManager.uiManager = this
-    summaryViewManager.uiManager = this
-    cartViewManager.uiManager = this
-  }
-
   init {
     setView(View.CARTS)
-    rootPanel.add(cartsViewManager.rootPanel)
-    rootPanel.add(summaryViewManager.rootPanel)
-    rootPanel.add(cartViewManager.rootPanel)
+    pluginPanel.add(cartsViewManager.rootPanel)
+    pluginPanel.add(summaryViewManager.rootPanel)
+    pluginPanel.add(cartViewManager.rootPanel)
   }
 
   override fun goToCartsView() = ontoEDT {
@@ -77,13 +65,13 @@ class UiManager private constructor(
     TODO("Not yet implemented")
   }
 
-  override fun goToAddCartView() {
+  override fun goToAddCartView() = ontoEDT {
     TODO("Not yet implemented")
   }
 
   override fun repaint() = ontoEDT {
-    rootPanel.revalidate()
-    rootPanel.repaint()
+    pluginPanel.revalidate()
+    pluginPanel.repaint()
   }
 
   private fun setView(view: View) = ontoEDT {

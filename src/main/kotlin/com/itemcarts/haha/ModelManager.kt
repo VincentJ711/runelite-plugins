@@ -1,7 +1,8 @@
 package com.itemcarts.haha
 
 import com.itemcarts.haha.ui.UiManager
-import javax.swing.JPanel
+import javax.inject.Inject
+import javax.inject.Singleton
 
 interface IModelManager {
   fun updateItems(onPlayer: Map<String, Long>, inBank: Map<String, Long>)
@@ -11,8 +12,10 @@ interface IModelManager {
   fun addCarts(carts: Iterable<RawCart>)
 }
 
-class ModelManager(rootPanel: JPanel) : IModelManager {
-  private val uiManager = UiManager(rootPanel, this)
+@Singleton
+class ModelManager : IModelManager {
+  @Inject
+  private lateinit var uiManager: UiManager
   private var itemsInBank = mapOf<String, Long>()
   private var itemsOnPlayer = mapOf<String, Long>()
   private var summary = mapOf<String, SummaryItem>()

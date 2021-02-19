@@ -1,11 +1,14 @@
 package com.itemcarts.haha.ui
 
+import javax.inject.Inject
+import javax.inject.Singleton
 import javax.swing.BoxLayout
 import javax.swing.JPanel
 
+@Singleton
 class MainNavRow : JPanel(), Destroyable {
-  lateinit var uiManager: UiManager
-
+  @Inject
+  private lateinit var uiManager: UiManager
   private val cartsBtn = LabelButton(
     LabelButtonOpts(
       text = "carts",

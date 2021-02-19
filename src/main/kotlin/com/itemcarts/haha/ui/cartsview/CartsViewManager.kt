@@ -6,6 +6,9 @@ import com.itemcarts.haha.ontoEDT
 import com.itemcarts.haha.ui.UiManager
 import net.runelite.client.ui.ColorScheme
 import java.awt.BorderLayout
+import javax.inject.Inject
+import javax.inject.Provider
+import javax.inject.Singleton
 import javax.swing.BoxLayout
 import javax.swing.JPanel
 import javax.swing.JScrollPane
@@ -25,10 +28,15 @@ interface ICartsViewManager {
   fun addCarts(carts: Iterable<Cart>)
 }
 
-class CartsViewManager(
-  private val modelManager: ModelManager,
-) : ICartsViewManager {
-  lateinit var uiManager: UiManager
+@Singleton
+class CartsViewManager : ICartsViewManager {
+  @Inject
+  private lateinit var modelManager: ModelManager
+
+  @Inject
+  // Provider breaks a circular dependency
+  private lateinit var uiManager: Provider<UiManager>
+
   private val cartsListPanel = JPanel()
   private val expandedCarts = mutableSetOf<String>()
   private val cartComponents =
@@ -66,7 +74,7 @@ class CartsViewManager(
       val index = cartsListPanel.components.indexOfFirst { it == currComp }
 
       if (index != -1) {
-        val nextComp = CartPanel(uiManager, modelManager, next, expandedCarts)
+        val nextComp = renderCart(next)
         currComp.onBeforeDestroy()
         cartComponents[next.uid] = nextComp
         cartsListPanel.remove(index)
@@ -85,10 +93,13 @@ class CartsViewManager(
   override fun addCarts(carts: Iterable<Cart>) = ontoEDT {
     for (cart in carts) {
       if (!cartComponents.containsKey(cart.uid)) {
-        val comp = CartPanel(uiManager, modelManager, cart, expandedCarts)
+        val comp = renderCart(cart)
         cartsListPanel.add(comp)
         cartComponents[cart.uid] = comp
       }
     }
   }
+
+  private fun renderCart(cart: Cart) =
+    CartPanel(uiManager.get(), modelManager, cart, expandedCarts)
 }

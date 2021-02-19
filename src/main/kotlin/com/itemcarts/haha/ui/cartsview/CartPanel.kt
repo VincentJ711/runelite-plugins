@@ -1,7 +1,7 @@
 package com.itemcarts.haha.ui.cartsview
 
 import com.itemcarts.haha.Cart
-import com.itemcarts.haha.ModelManager
+import com.itemcarts.haha.IModelManager
 import com.itemcarts.haha.ui.Destroyable
 import com.itemcarts.haha.ui.UiManager
 import java.awt.BorderLayout
@@ -10,7 +10,7 @@ import javax.swing.border.EmptyBorder
 
 class CartPanel(
   private val uiManager: UiManager,
-  private val modelManager: ModelManager,
+  private val modelManager: IModelManager,
   private val cart: Cart,
   private val expandedCarts: MutableSet<String>
 ) : JPanel(BorderLayout()), Destroyable {

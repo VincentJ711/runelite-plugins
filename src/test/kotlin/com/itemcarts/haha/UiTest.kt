@@ -1,17 +1,24 @@
 package com.itemcarts.haha
 
+import com.google.inject.Guice
+import com.itemcarts.haha.ui.ItemCartsPluginPanel
 import net.runelite.client.ui.FontManager
-import net.runelite.client.ui.PluginPanel
 import net.runelite.client.ui.skin.SubstanceRuneLiteLookAndFeel
 import net.runelite.client.util.SwingUtil
 import org.pushingpixels.substance.internal.SubstanceSynapse
+import javax.inject.Inject
+import javax.inject.Singleton
 import javax.swing.JFrame
 
+@Singleton
 private class UiTest : JFrame() {
-  val rootPanel = object : PluginPanel() {}
-  val modelManager = ModelManager(rootPanel)
+  @Inject
+  lateinit var rootPanel: ItemCartsPluginPanel
 
-  init {
+  @Inject
+  private lateinit var modelManager: ModelManager
+
+  fun start() {
     title = "View Test"
     setSize(500, 900)
     defaultCloseOperation = EXIT_ON_CLOSE
@@ -84,6 +91,7 @@ private class UiTest : JFrame() {
       //     )
       //   )
       // })
+      // println(modelManager.uiManager)
     }.start()
   }
 }
@@ -92,7 +100,11 @@ fun main() = ontoEDT {
   SwingUtil.setupDefaults()
   SwingUtil.setTheme(SubstanceRuneLiteLookAndFeel())
   SwingUtil.setFont(FontManager.getRunescapeFont())
-  val frame = UiTest()
+
+  val injector = Guice.createInjector()
+  val frame = injector.getInstance(UiTest::class.java)
 //the above theme screws up the coloring... this make sure colors are true...
   frame.rootPanel.putClientProperty(SubstanceSynapse.COLORIZATION_FACTOR, 1.0)
+
+  frame.start()
 }
