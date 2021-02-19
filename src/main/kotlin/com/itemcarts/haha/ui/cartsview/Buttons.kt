@@ -22,10 +22,10 @@ class CartNameButton(name: String, onClick: () -> Unit) : LabelButton(
 
 class StatusButton(completed: Boolean) : IconButton(
   LabelButtonOpts(
-    text = if (completed) "✓" else "✘",
+    text = "✓",
     tooltipText = if (completed) "complete" else "incomplete",
-    textColor = if (completed) SUCCESS_PRIMARY else DANGEROUS_PRIMARY,
-    textHoverColor = if (completed) SUCCESS_PRIMARY else DANGEROUS_PRIMARY,
+    textColor = if (completed) SUCCESS_PRIMARY else TEXT_DISABLED,
+    textHoverColor = if (completed) SUCCESS_PRIMARY else TEXT_DISABLED,
     bgColor = ColorScheme.DARKER_GRAY_COLOR,
     bgHoverColor = ColorScheme.DARKER_GRAY_COLOR
   )
@@ -34,7 +34,7 @@ class StatusButton(completed: Boolean) : IconButton(
 class DeleteCartButton(onClick: () -> Unit) : IconButton(
   LabelButtonOpts(
     text = "✘",
-    textColor = DANGEROUS_SECONDARY,
+    textColor = TEXT_DISABLED,
     textHoverColor = DANGEROUS_PRIMARY,
     tooltipText = "Delete Cart (double click)",
     requireDoubleClick = true,
@@ -45,6 +45,7 @@ class DeleteCartButton(onClick: () -> Unit) : IconButton(
 class EditCartButton(onClick: () -> Unit) : IconButton(
   LabelButtonOpts(
     text = "✎",
+    textColor = TEXT_DISABLED,
     tooltipText = "Edit Cart",
     onClick = onClick
   )

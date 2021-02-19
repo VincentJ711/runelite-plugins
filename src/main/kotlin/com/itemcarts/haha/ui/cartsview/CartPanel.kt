@@ -2,10 +2,7 @@ package com.itemcarts.haha.ui.cartsview
 
 import com.itemcarts.haha.Cart
 import com.itemcarts.haha.ui.Destroyable
-import com.itemcarts.haha.ui.TEXT_SECONDARY
 import java.awt.BorderLayout
-import java.awt.GridBagLayout
-import javax.swing.JLabel
 import javax.swing.JPanel
 import javax.swing.border.EmptyBorder
 
@@ -25,7 +22,7 @@ class CartPanel(
 
   init {
     val topPanel = JPanel(BorderLayout())
-    val detailPanel = JPanel(GridBagLayout()) // TODO
+    val cartItemsPanel = CartItemsPanel(cart)
     val ctrlPanel = JPanel(BorderLayout())
 
     border = EmptyBorder(0, 0, 8, 0)
@@ -34,19 +31,15 @@ class CartPanel(
     topPanel.add(statusBtn, BorderLayout.EAST)
     add(topPanel, BorderLayout.NORTH)
 
-    // TODO detailPanel stuff
-    val dum = JLabel("hello")
-    dum.foreground = TEXT_SECONDARY
-    detailPanel.add(dum)
-    btmPanel.add(detailPanel, BorderLayout.NORTH)
+    btmPanel.add(cartItemsPanel, BorderLayout.NORTH)
 
-    ctrlPanel.add(deleteBtn, BorderLayout.WEST)
+    ctrlPanel.add(editBtn, BorderLayout.WEST)
     ctrlPanel.add(JPanel(), BorderLayout.CENTER)
-    ctrlPanel.add(editBtn, BorderLayout.EAST)
+    ctrlPanel.add(deleteBtn, BorderLayout.EAST)
     btmPanel.add(ctrlPanel, BorderLayout.SOUTH)
 
-    btmPanel.border = EmptyBorder(8, 0, 8, 0)
-    btmPanel.isVisible = expandedCarts.contains(cart.uid)
+    btmPanel.border = EmptyBorder(8, 0, 0, 0)
+    btmPanel.isVisible = true // expandedCarts.contains(cart.uid) TODO
     add(btmPanel, BorderLayout.SOUTH)
   }
 

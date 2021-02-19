@@ -21,46 +21,62 @@ private class UiTest : JFrame() {
 
     modelManager.setCarts(
       listOf(
-        RawCart("alpha", emptyList()),
         RawCart(
           "bravo", listOf(
             RawCartItem("Abyssal Whip", 0, 10),
-            RawCartItem("Zammy Hasta", 0, 1)
+            RawCartItem("Zammy Hasta", 1, 1234345)
+          )
+        ),
+        RawCart(
+          "alpha", listOf(
+            RawCartItem(
+              "lolasf asdfa asdf asdfawe asdfasfd wef asdfas asdfa asdf asdfa  sadf",
+              0,
+              10
+            ),
+            RawCartItem("nice", 1, 1234345)
           )
         )
       )
     )
 
-
     Thread {
       val waitTime = 2500L
 
-      println("adding 2 carts")
+      println("adding items on player/inbank")
       Thread.sleep(waitTime)
-      modelManager.addCarts(
-        listOf(
-          RawCart("charlie", emptyList()),
-          RawCart("delta", emptyList())
+      modelManager.updateItems(
+        mutableMapOf(), mapOf(
+          "Abyssal Whip" to 1234L
         )
       )
 
-      println("updating carts at index 0 and 2")
-      assert(modelManager.carts.size > 2)
-      Thread.sleep(waitTime)
-      val cart0 = modelManager.carts[0]
-      val cart2 = modelManager.carts[2]
-      modelManager.updateCarts(
-        listOf(
-          cart2.copy(name = "${cart2.name} ${cart2.name}"),
-          cart0.copy(name = "${cart0.name} ${cart0.name}")
-        )
-      )
-
-      println("removing cart at index 1")
-      modelManager.carts.getOrNull(1)?.let {
-        Thread.sleep(waitTime)
-        modelManager.removeCart(it.uid)
-      }
+      // println("adding 2 carts")
+      // Thread.sleep(waitTime)
+      // modelManager.addCarts(
+      //   listOf(
+      //     RawCart("charlie", emptyList()),
+      //     RawCart("delta", emptyList())
+      //   )
+      // )
+      //
+      // println("updating carts at index 0 and 2")
+      // assert(modelManager.carts.size > 2)
+      // Thread.sleep(waitTime)
+      // val cart0 = modelManager.carts[0]
+      // val cart2 = modelManager.carts[2]
+      // modelManager.updateCarts(
+      //   listOf(
+      //     cart2.copy(name = "${cart2.name} ${cart2.name}"),
+      //     cart0.copy(name = "${cart0.name} ${cart0.name}")
+      //   )
+      // )
+      //
+      // println("removing cart at index 1")
+      // modelManager.carts.getOrNull(1)?.let {
+      //   Thread.sleep(waitTime)
+      //   modelManager.removeCart(it.uid)
+      // }
 
       // println("resetting carts")
       // Thread.sleep(waitTime)
