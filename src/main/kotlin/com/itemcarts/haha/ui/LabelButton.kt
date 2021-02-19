@@ -54,4 +54,3 @@ open class LabelButton(
     }
   }
 }
-

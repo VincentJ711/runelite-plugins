@@ -7,7 +7,7 @@ import net.runelite.client.util.SwingUtil
 import org.pushingpixels.substance.internal.SubstanceSynapse
 import javax.swing.JFrame
 
-private class ViewTest : JFrame() {
+private class UiTest : JFrame() {
   val rootPanel = object : PluginPanel() {}
   val modelManager = ModelManager(rootPanel)
 
@@ -75,7 +75,7 @@ fun main() = ontoEDT {
   SwingUtil.setupDefaults()
   SwingUtil.setTheme(SubstanceRuneLiteLookAndFeel())
   SwingUtil.setFont(FontManager.getRunescapeFont())
-  val frame = ViewTest()
-  // the above theme screws up the coloring... this make sure colors are true...
+  val frame = UiTest()
+//the above theme screws up the coloring... this make sure colors are true...
   frame.rootPanel.putClientProperty(SubstanceSynapse.COLORIZATION_FACTOR, 1.0)
 }

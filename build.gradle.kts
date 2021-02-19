@@ -35,3 +35,8 @@ tasks.compileKotlin {
     freeCompilerArgs = listOf("-Xjvm-default=enable")
   }
 }
+
+tasks.create<JavaExec>("testui") {
+  classpath = sourceSets["test"].runtimeClasspath
+  main = "com.itemcarts.haha.UiTestKt"
+}
