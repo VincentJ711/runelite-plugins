@@ -16,7 +16,7 @@ data class LabelButtonOpts(
   val textColor: Color = ColorScheme.BRAND_ORANGE_TRANSPARENT,
   val textHoverColor: Color = ColorScheme.BRAND_ORANGE,
   val requireDoubleClick: Boolean = false,
-  var callback: (() -> Unit)? = null
+  var onClick: (() -> Unit)? = null
 )
 
 open class LabelButton(
@@ -35,7 +35,7 @@ open class LabelButton(
 
   override fun onBeforeDestroy() = removeMouseListener(adapter)
 
-  private fun refresh(hovering: Boolean) {
+  private fun onHoverChanged(hovering: Boolean) {
     foreground = if (hovering) opts.textHoverColor else opts.textColor
     background = if (hovering) opts.bgHoverColor else opts.bgColor
   }
@@ -43,12 +43,12 @@ open class LabelButton(
   private inner class Adapter : MouseAdapter() {
     private var lastClickTime = System.currentTimeMillis()
 
-    override fun mouseEntered(e: MouseEvent?) = refresh(true)
-    override fun mouseExited(e: MouseEvent?) = refresh(false)
+    override fun mouseEntered(e: MouseEvent?) = onHoverChanged(true)
+    override fun mouseExited(e: MouseEvent?) = onHoverChanged(false)
     override fun mousePressed(e: MouseEvent?) {
       val now = System.currentTimeMillis()
       if (!opts.requireDoubleClick || now - lastClickTime < 350) {
-        opts.callback?.invoke()
+        opts.onClick?.invoke()
       }
       lastClickTime = now
     }

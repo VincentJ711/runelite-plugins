@@ -11,7 +11,7 @@ class CartNameButton(name: String, onClick: () -> Unit) : LabelButton(
     textHoverColor = TEXT_PRIMARY,
     bgColor = ColorScheme.DARKER_GRAY_COLOR,
     bgHoverColor = ColorScheme.DARKER_GRAY_HOVER_COLOR,
-    callback = onClick
+    onClick = onClick
   )
 ) {
   init {
@@ -38,7 +38,7 @@ class DeleteCartButton(onClick: () -> Unit) : IconButton(
     textHoverColor = DANGEROUS_PRIMARY,
     tooltipText = "Delete Cart (double click)",
     requireDoubleClick = true,
-    callback = onClick
+    onClick = onClick
   )
 )
 
@@ -46,6 +46,6 @@ class EditCartButton(onClick: () -> Unit) : IconButton(
   LabelButtonOpts(
     text = "✎",
     tooltipText = "Edit Cart",
-    callback = onClick
+    onClick = onClick
   )
 )
