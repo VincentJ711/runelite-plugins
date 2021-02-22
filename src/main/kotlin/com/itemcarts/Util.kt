@@ -1,18 +1,6 @@
-package com.itemcarts.haha
+package com.itemcarts
 
 import javax.swing.SwingUtilities
-
-/** allows you to modify a list during traversal */
-inline fun <T> MutableList<T>.mapInPlace(mutator: (T) -> T) {
-  val iterate = this.listIterator()
-  while (iterate.hasNext()) {
-    val oldValue = iterate.next()
-    val newValue = mutator(oldValue)
-    if (newValue !== oldValue) {
-      iterate.set(newValue)
-    }
-  }
-}
 
 /**
  * returns a map with a key for each item name in the given carts whose

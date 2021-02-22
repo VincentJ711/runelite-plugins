@@ -1,13 +1,13 @@
-package com.itemcarts.haha.ui
+package com.itemcarts.ui
 
-import com.itemcarts.haha.Cart
-import com.itemcarts.haha.ontoEDT
-import com.itemcarts.haha.ui.cartsview.CartsViewManager
-import com.itemcarts.haha.ui.cartsview.ICartsViewManager
-import com.itemcarts.haha.ui.cartview.CartViewManager
-import com.itemcarts.haha.ui.cartview.ICartViewManager
-import com.itemcarts.haha.ui.summaryview.ISummaryViewManager
-import com.itemcarts.haha.ui.summaryview.SummaryViewManager
+import com.itemcarts.Cart
+import com.itemcarts.ontoEDT
+import com.itemcarts.ui.cartsview.CartsViewManager
+import com.itemcarts.ui.cartsview.ICartsViewManager
+import com.itemcarts.ui.cartview.CartViewManager
+import com.itemcarts.ui.cartview.ICartViewManager
+import com.itemcarts.ui.summaryview.ISummaryViewManager
+import com.itemcarts.ui.summaryview.SummaryViewManager
 import java.awt.BorderLayout
 import javax.inject.Inject
 import javax.inject.Singleton

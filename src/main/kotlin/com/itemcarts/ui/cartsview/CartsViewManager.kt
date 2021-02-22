@@ -1,9 +1,9 @@
-package com.itemcarts.haha.ui.cartsview
+package com.itemcarts.ui.cartsview
 
-import com.itemcarts.haha.Cart
-import com.itemcarts.haha.ModelManager
-import com.itemcarts.haha.ontoEDT
-import com.itemcarts.haha.ui.UiManager
+import com.itemcarts.Cart
+import com.itemcarts.ModelManager
+import com.itemcarts.ontoEDT
+import com.itemcarts.ui.UiManager
 import net.runelite.client.ui.ColorScheme
 import net.runelite.client.ui.components.CustomScrollBarUI
 import java.awt.BorderLayout

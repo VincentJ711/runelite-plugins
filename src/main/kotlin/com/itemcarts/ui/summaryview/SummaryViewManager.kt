@@ -1,7 +1,7 @@
-package com.itemcarts.haha.ui.summaryview
+package com.itemcarts.ui.summaryview
 
-import com.itemcarts.haha.ontoEDT
-import com.itemcarts.haha.ui.UiManager
+import com.itemcarts.ontoEDT
+import com.itemcarts.ui.UiManager
 import javax.swing.JPanel
 
 interface ISummaryViewManager {

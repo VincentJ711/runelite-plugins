@@ -1,6 +1,6 @@
-package com.itemcarts.haha
+package com.itemcarts
 
-import com.itemcarts.haha.ui.UiManager
+import com.itemcarts.ui.UiManager
 import javax.inject.Inject
 import javax.inject.Singleton
 

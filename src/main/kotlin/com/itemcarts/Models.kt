@@ -1,6 +1,6 @@
-package com.itemcarts.haha
+package com.itemcarts
 
-import java.util.UUID
+import java.util.*
 
 data class RawCartItem(
   val name: String,
@@ -41,12 +41,4 @@ data class Cart(
   init {
     // TODO make sure each item name is unique
   }
-}
-
-class CartsInfo(
-  val list: List<Cart>
-) {
-  val summary = calcSummary(list)
-
-  override fun toString() = "CartsInfo(list=${list}, summary=${summary})"
 }

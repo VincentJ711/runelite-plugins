@@ -1,5 +1,8 @@
 package com.itemcarts.haha
 
+import com.itemcarts.Cart
+import com.itemcarts.CartItem
+import com.itemcarts.SummaryItem
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

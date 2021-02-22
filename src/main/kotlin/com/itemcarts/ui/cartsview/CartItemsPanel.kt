@@ -1,8 +1,8 @@
-package com.itemcarts.haha.ui.cartsview
+package com.itemcarts.ui.cartsview
 
-import com.itemcarts.haha.Cart
-import com.itemcarts.haha.CartItem
-import com.itemcarts.haha.ui.TEXT_SECONDARY
+import com.itemcarts.Cart
+import com.itemcarts.CartItem
+import com.itemcarts.ui.TEXT_SECONDARY
 import net.runelite.client.util.QuantityFormatter
 import java.awt.Dimension
 import java.awt.Font

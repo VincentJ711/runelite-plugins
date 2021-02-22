@@ -1,6 +1,6 @@
-package com.itemcarts.haha.ui.cartview
+package com.itemcarts.ui.cartview
 
-import com.itemcarts.haha.ui.UiManager
+import com.itemcarts.ui.UiManager
 import javax.swing.JPanel
 
 interface ICartViewManager

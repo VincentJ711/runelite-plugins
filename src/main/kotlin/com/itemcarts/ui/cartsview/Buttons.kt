@@ -1,6 +1,6 @@
-package com.itemcarts.haha.ui.cartsview
+package com.itemcarts.ui.cartsview
 
-import com.itemcarts.haha.ui.*
+import com.itemcarts.ui.*
 import net.runelite.client.ui.ColorScheme
 import javax.swing.border.EmptyBorder
 

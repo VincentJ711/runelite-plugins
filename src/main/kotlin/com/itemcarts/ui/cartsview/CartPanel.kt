@@ -1,9 +1,9 @@
-package com.itemcarts.haha.ui.cartsview
+package com.itemcarts.ui.cartsview
 
-import com.itemcarts.haha.Cart
-import com.itemcarts.haha.IModelManager
-import com.itemcarts.haha.ui.Destroyable
-import com.itemcarts.haha.ui.UiManager
+import com.itemcarts.Cart
+import com.itemcarts.IModelManager
+import com.itemcarts.ui.Destroyable
+import com.itemcarts.ui.UiManager
 import java.awt.BorderLayout
 import javax.swing.JPanel
 import javax.swing.border.EmptyBorder

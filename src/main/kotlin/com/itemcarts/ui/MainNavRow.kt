@@ -1,4 +1,4 @@
-package com.itemcarts.haha.ui
+package com.itemcarts.ui
 
 import javax.inject.Inject
 import javax.inject.Singleton
