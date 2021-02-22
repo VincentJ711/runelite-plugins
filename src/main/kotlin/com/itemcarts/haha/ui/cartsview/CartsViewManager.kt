@@ -42,8 +42,7 @@ class CartsViewManager : ICartsViewManager {
 
   private val cartsListPanel = JPanel()
   private val expandedCarts = mutableSetOf<String>()
-  private val cartComponents =
-    mutableMapOf<String, CartPanel>()
+  private val cartComponents = mutableMapOf<String, CartPanel>()
   val rootPanel = JPanel(BorderLayout())
 
   init {
