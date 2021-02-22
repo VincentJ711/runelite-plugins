@@ -4,8 +4,10 @@ import com.itemcarts.haha.Cart
 import com.itemcarts.haha.CartItem
 import com.itemcarts.haha.ui.TEXT_SECONDARY
 import net.runelite.client.util.QuantityFormatter
+import java.awt.Dimension
 import java.awt.Font
 import java.awt.GridLayout
+import javax.swing.BoxLayout
 import javax.swing.JLabel
 import javax.swing.JPanel
 import javax.swing.border.EmptyBorder
@@ -23,14 +25,21 @@ class CartItemsPanel(cart: Cart) : JPanel(GridLayout(1, 2, 2, 0)) {
   init {
     border = EmptyBorder(0, 4, 0, 4)
 
-    val nameColumn = JPanel(GridLayout(cart.items.size + 1, 1))
-    val currAmtColumn = JPanel(GridLayout(cart.items.size + 1, 1))
-    val reqdAmtColumn = JPanel(GridLayout(cart.items.size + 1, 1))
+    val nameColumn = boxPanel()
+    val currAmtColumn = boxPanel()
+    val reqdAmtColumn = boxPanel()
     val numbersPanel = JPanel(GridLayout(1, 2, 2, 0))
+
+    // ensures name doesnt exceed the width of the plugin panel
+    nameColumn.maximumSize = Dimension(0, 0)
+    nameColumn.preferredSize = Dimension(0, 0)
+
+    val requiredLabel = JLabel("required")
+    requiredLabel.toolTipText = "= reusable + consumable"
 
     nameColumn.add(JLabel("item name"))
     currAmtColumn.add(JLabel("current"))
-    reqdAmtColumn.add(JLabel("required"))
+    reqdAmtColumn.add(requiredLabel)
 
     cart.items.forEach { i ->
       nameColumn.add(itemNameLabel(i.name))
@@ -42,6 +51,12 @@ class CartItemsPanel(cart: Cart) : JPanel(GridLayout(1, 2, 2, 0)) {
     numbersPanel.add(reqdAmtColumn)
     add(nameColumn)
     add(numbersPanel)
+  }
+
+  private fun boxPanel(): JPanel {
+    val panel = JPanel()
+    panel.layout = BoxLayout(panel, BoxLayout.Y_AXIS)
+    return panel
   }
 
   private fun itemNameLabel(name: String): JLabel {
@@ -57,7 +72,7 @@ class CartItemsPanel(cart: Cart) : JPanel(GridLayout(1, 2, 2, 0)) {
     label.foreground = TEXT_SECONDARY
     label.font = numberLabelFont
     label.toolTipText = fmt(chosen) +
-        if (!required || item.reusableAmt == 0L || item.consumableAmt == 0L) ""
+        if (!required) ""
         else " = ${fmt(item.reusableAmt)} + ${fmt(item.consumableAmt)}"
 
     return label

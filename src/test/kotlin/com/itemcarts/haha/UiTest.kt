@@ -43,7 +43,7 @@ private class UiTest : JFrame() {
     )
 
     Thread {
-      val waitTime = 2500L
+      val waitTime = 500L
 
       println("adding items on player/inbank")
       Thread.sleep(waitTime)
@@ -81,16 +81,16 @@ private class UiTest : JFrame() {
       //   modelManager.removeCart(it.uid)
       // }
 
-      // println("resetting carts")
-      // Thread.sleep(waitTime)
-      // modelManager.setCarts((1 until 100).map {
-      //   RawCart(
-      //     "cart #${it}", listOf(
-      //       RawCartItem("Abyssal Whip", 0, 10),
-      //       RawCartItem("Zammy Hasta", 1, 1234345)
-      //     )
-      //   )
-      // })
+      println("resetting carts")
+      Thread.sleep(waitTime)
+      modelManager.setCarts((1 until 100).map {
+        RawCart(
+          "cart #${it}", listOf(
+            RawCartItem("Abyssal Whip", 0, 10),
+            RawCartItem("Zammy Hasta", 1, 1234345)
+          )
+        )
+      })
       // println(modelManager.uiManager)
     }.start()
   }
@@ -103,7 +103,7 @@ fun main() = ontoEDT {
 
   val injector = Guice.createInjector()
   val frame = injector.getInstance(UiTest::class.java)
-//the above theme screws up the coloring... this make sure colors are true...
+  // the above theme screws up the coloring... this make sure colors are true...
   frame.rootPanel.putClientProperty(SubstanceSynapse.COLORIZATION_FACTOR, 1.0)
 
   frame.start()

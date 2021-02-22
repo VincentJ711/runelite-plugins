@@ -47,38 +47,14 @@ class MyPlugin : Plugin() {
     navButton = createNavButton()
     clientToolbar.addNavigation(navButton)
 
-    modelManager.setCarts((1 until 100).map {
-      if (it % 2 == 0) {
-        RawCart(
-          "bravo", listOf(
-            RawCartItem("Abyssal Whip", 0, 10),
-            RawCartItem("Zammy Hasta   asdfasdfa asdfasdf sdf", 1, 1234345)
-          )
+    modelManager.setCarts((1 until 30).map {
+      RawCart(
+        "cart #${it}", listOf(
+          RawCartItem("Abyssal Whip", 0, 10),
+          RawCartItem("this is a very long item name", 1, 1234345)
         )
-      } else {
-        RawCart(
-          "alpha", listOf(
-            RawCartItem("Tinderbox", 1, 0)
-          )
-        )
-      }
+      )
     })
-
-    // modelManager.setCarts(
-    //   listOf(
-    //     RawCart(
-    //       "bravo", listOf(
-    //         RawCartItem("Abyssal Whip", 0, 10),
-    //         RawCartItem("Zammy Hasta", 1, 1234345)
-    //       )
-    //     ),
-    //     RawCart(
-    //       "alpha", listOf(
-    //         RawCartItem("Tinderbox", 1, 0)
-    //       )
-    //     )
-    //   )
-    // )
   }
 
   private fun createNavButton(): NavigationButton {

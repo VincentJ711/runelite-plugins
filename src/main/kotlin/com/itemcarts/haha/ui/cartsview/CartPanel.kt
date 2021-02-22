@@ -25,7 +25,7 @@ class CartPanel(
     val cartItemsPanel = CartItemsPanel(cart)
     val ctrlPanel = JPanel(BorderLayout())
 
-    border = EmptyBorder(0, 0, 8, 0)
+    border = EmptyBorder(0, 0, 4, 0)
 
     topPanel.add(cartNameBtn, BorderLayout.CENTER)
     topPanel.add(statusBtn, BorderLayout.EAST)
