@@ -8,6 +8,7 @@ import com.itemcarts.haha.ui.cartview.CartViewManager
 import com.itemcarts.haha.ui.cartview.ICartViewManager
 import com.itemcarts.haha.ui.summaryview.ISummaryViewManager
 import com.itemcarts.haha.ui.summaryview.SummaryViewManager
+import java.awt.BorderLayout
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -48,9 +49,9 @@ class UiManager @Inject constructor(
 
   init {
     setView(View.CARTS)
-    pluginPanel.add(cartsViewManager.rootPanel)
-    pluginPanel.add(summaryViewManager.rootPanel)
-    pluginPanel.add(cartViewManager.rootPanel)
+    pluginPanel.add(cartsViewManager.rootPanel, BorderLayout.CENTER)
+    // pluginPanel.add(summaryViewManager.rootPanel, BorderLayout.CENTER)
+    // pluginPanel.add(cartViewManager.rootPanel, BorderLayout.CENTER)
   }
 
   override fun goToCartsView() = ontoEDT {

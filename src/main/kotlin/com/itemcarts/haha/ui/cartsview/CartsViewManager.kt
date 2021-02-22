@@ -5,13 +5,12 @@ import com.itemcarts.haha.ModelManager
 import com.itemcarts.haha.ontoEDT
 import com.itemcarts.haha.ui.UiManager
 import net.runelite.client.ui.ColorScheme
-import java.awt.BorderLayout
 import javax.inject.Inject
 import javax.inject.Provider
 import javax.inject.Singleton
 import javax.swing.BoxLayout
 import javax.swing.JPanel
-import javax.swing.JScrollPane
+import javax.swing.JTextArea
 import javax.swing.border.EmptyBorder
 
 interface ICartsViewManager {
@@ -44,20 +43,31 @@ class CartsViewManager : ICartsViewManager {
   val rootPanel = JPanel()
 
   init {
-    val scrollPaneChild = JPanel(BorderLayout())
-    val scrollPane = JScrollPane(scrollPaneChild)
-    val dummyPanel = JPanel()
-
     cartsListPanel.background = ColorScheme.DARK_GRAY_COLOR
     cartsListPanel.border = EmptyBorder(8, 0, 8, 0)
     cartsListPanel.layout = BoxLayout(cartsListPanel, BoxLayout.Y_AXIS)
-
-    scrollPaneChild.add(cartsListPanel, BorderLayout.NORTH)
-    scrollPaneChild.add(dummyPanel, BorderLayout.CENTER)
+    // cartsListPanel.preferredSize = Dimension(300, 0)
 
     rootPanel.layout = BoxLayout(rootPanel, BoxLayout.Y_AXIS)
-    rootPanel.add(scrollPane)
+    rootPanel.add(JTextArea("hello"))
+    rootPanel.add(cartsListPanel)
   }
+
+  // init {
+  //   val scrollPaneChild = JPanel(BorderLayout())
+  //   val scrollPane = JScrollPane(scrollPaneChild)
+  //   val dummyPanel = JPanel()
+  //
+  //   cartsListPanel.background = ColorScheme.DARK_GRAY_COLOR
+  //   cartsListPanel.border = EmptyBorder(8, 0, 8, 0)
+  //   cartsListPanel.layout = BoxLayout(cartsListPanel, BoxLayout.Y_AXIS)
+  //
+  //   scrollPaneChild.add(cartsListPanel, BorderLayout.NORTH)
+  //   scrollPaneChild.add(dummyPanel, BorderLayout.CENTER)
+  //
+  //   rootPanel.layout = BoxLayout(rootPanel, BoxLayout.Y_AXIS)
+  //   rootPanel.add(scrollPane)
+  // }
 
   override fun setCarts(carts: Iterable<Cart>) = ontoEDT {
     for ((_, comp) in cartComponents) {
