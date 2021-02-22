@@ -38,5 +38,5 @@ tasks.compileKotlin {
 
 tasks.create<JavaExec>("testui") {
   classpath = sourceSets["test"].runtimeClasspath
-  main = "com.itemcarts.haha.UiTestKt"
+  main = "com.itemcarts.UiTestKt"
 }

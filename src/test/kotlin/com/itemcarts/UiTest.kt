@@ -1,10 +1,7 @@
-package com.itemcarts.ui
+package com.itemcarts
 
 import com.google.inject.Guice
-import com.itemcarts.ModelManager
-import com.itemcarts.RawCart
-import com.itemcarts.RawCartItem
-import com.itemcarts.ontoEDT
+import com.itemcarts.ui.ItemCartsPluginPanel
 import net.runelite.client.ui.FontManager
 import net.runelite.client.ui.skin.SubstanceRuneLiteLookAndFeel
 import net.runelite.client.util.SwingUtil
