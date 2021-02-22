@@ -11,12 +11,7 @@ import com.itemcarts.ui.summaryview.SummaryViewManager
 import java.awt.BorderLayout
 import javax.inject.Inject
 import javax.inject.Singleton
-
-enum class View {
-  CARTS,
-  SUMMARY,
-  EDIT_CART
-}
+import javax.swing.JPanel
 
 interface IUiManager {
   /** takes you to the carts view */
@@ -36,7 +31,7 @@ interface IUiManager {
 }
 
 @Singleton
-class UiManager @Inject constructor(
+class ViewManager @Inject constructor(
   private val pluginPanel: ItemCartsPluginPanel,
   private val cartsViewManager: CartsViewManager,
   private val summaryViewManager: SummaryViewManager,
@@ -48,21 +43,14 @@ class UiManager @Inject constructor(
   ICartViewManager by cartViewManager {
 
   init {
-    setView(View.CARTS)
     pluginPanel.add(cartsViewManager.rootPanel, BorderLayout.CENTER)
-    // pluginPanel.add(summaryViewManager.rootPanel, BorderLayout.CENTER)
-    // pluginPanel.add(cartViewManager.rootPanel, BorderLayout.CENTER)
   }
 
-  override fun goToCartsView() = ontoEDT {
-    TODO("Not yet implemented")
-  }
+  override fun goToCartsView() = setView(cartsViewManager.rootPanel)
 
-  override fun goToSummaryView() = ontoEDT {
-    TODO("Not yet implemented")
-  }
+  override fun goToSummaryView() = setView(summaryViewManager.rootPanel)
 
-  override fun goToEditCartView(cart: Cart) = ontoEDT {
+  override fun goToEditCartView(cart: Cart) {
     TODO("Not yet implemented")
   }
 
@@ -75,10 +63,9 @@ class UiManager @Inject constructor(
     pluginPanel.repaint()
   }
 
-  private fun setView(view: View) = ontoEDT {
-    cartsViewManager.rootPanel.isVisible = view == View.CARTS
-    summaryViewManager.rootPanel.isVisible = view == View.SUMMARY
-    cartViewManager.rootPanel.isVisible = view == View.EDIT_CART
+  private fun setView(view: JPanel) = ontoEDT {
+    pluginPanel.removeAll()
+    pluginPanel.add(view, BorderLayout.CENTER)
     repaint()
   }
 }

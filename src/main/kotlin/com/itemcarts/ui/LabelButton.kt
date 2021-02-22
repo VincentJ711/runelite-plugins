@@ -1,8 +1,8 @@
 package com.itemcarts.ui
 
 import net.runelite.client.ui.ColorScheme
+import net.runelite.client.ui.FontManager
 import java.awt.Color
-import java.awt.Dimension
 import java.awt.event.MouseAdapter
 import java.awt.event.MouseEvent
 import javax.swing.JLabel
@@ -25,7 +25,7 @@ open class LabelButton(
   private val adapter = Adapter()
 
   init {
-    preferredSize = Dimension(0, 36)
+    font = FontManager.getRunescapeFont()
     background = opts.bgColor
     foreground = opts.textColor
     isOpaque = true

@@ -7,8 +7,8 @@ import javax.swing.border.EmptyBorder
 class CartNameButton(name: String, onClick: () -> Unit) : LabelButton(
   LabelButtonOpts(
     text = name,
-    textColor = TEXT_SECONDARY,
-    textHoverColor = TEXT_PRIMARY,
+    textColor = TEXT_PRIMARY,
+    textHoverColor = ColorScheme.BRAND_ORANGE,
     bgColor = ColorScheme.DARKER_GRAY_COLOR,
     bgHoverColor = ColorScheme.DARKER_GRAY_HOVER_COLOR,
     onClick = onClick

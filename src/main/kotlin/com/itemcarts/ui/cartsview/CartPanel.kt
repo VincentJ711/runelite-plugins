@@ -3,13 +3,13 @@ package com.itemcarts.ui.cartsview
 import com.itemcarts.Cart
 import com.itemcarts.IModelManager
 import com.itemcarts.ui.Destroyable
-import com.itemcarts.ui.UiManager
+import com.itemcarts.ui.ViewManager
 import java.awt.BorderLayout
 import javax.swing.JPanel
 import javax.swing.border.EmptyBorder
 
 class CartPanel(
-  private val uiManager: UiManager,
+  private val viewManager: ViewManager,
   private val modelManager: IModelManager,
   private val cart: Cart,
   private val expandedCarts: MutableSet<String>
@@ -17,7 +17,7 @@ class CartPanel(
   private val btmPanel = JPanel(BorderLayout())
   private val statusBtn = StatusButton(cart.completed)
   private val cartNameBtn = CartNameButton(cart.name) { toggleExpansion() }
-  private val editBtn = EditCartButton { uiManager.goToEditCartView(cart) }
+  private val editBtn = EditCartButton { viewManager.goToEditCartView(cart) }
   private val deleteBtn = DeleteCartButton { modelManager.removeCart(cart.uid) }
 
   init {
@@ -25,7 +25,7 @@ class CartPanel(
     val cartItemsPanel = CartItemsPanel(cart)
     val ctrlPanel = JPanel(BorderLayout())
 
-    border = EmptyBorder(0, 0, 4, 0)
+    border = EmptyBorder(0, 0, 8, 0)
 
     topPanel.add(cartNameBtn, BorderLayout.CENTER)
     topPanel.add(statusBtn, BorderLayout.EAST)
@@ -33,6 +33,7 @@ class CartPanel(
 
     btmPanel.add(cartItemsPanel, BorderLayout.NORTH)
 
+    ctrlPanel.border = EmptyBorder(8, 0, 0, 0)
     ctrlPanel.add(deleteBtn, BorderLayout.WEST)
     ctrlPanel.add(JPanel(), BorderLayout.CENTER)
     ctrlPanel.add(editBtn, BorderLayout.EAST)

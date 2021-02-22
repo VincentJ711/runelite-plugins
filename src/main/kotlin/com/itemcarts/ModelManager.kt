@@ -1,6 +1,6 @@
 package com.itemcarts
 
-import com.itemcarts.ui.UiManager
+import com.itemcarts.ui.ViewManager
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -15,7 +15,7 @@ interface IModelManager {
 @Singleton
 class ModelManager : IModelManager {
   @Inject
-  private lateinit var uiManager: UiManager
+  private lateinit var viewManager: ViewManager
   private var itemsInBank = mapOf<String, Long>()
   private var itemsOnPlayer = mapOf<String, Long>()
   private var summary = mapOf<String, SummaryItem>()
@@ -46,7 +46,7 @@ class ModelManager : IModelManager {
   override fun setCarts(carts: Iterable<RawCart>) {
     this.carts = carts.map { fromRawCart(it) }
     updateSummary()
-    uiManager.setCarts(this.carts)
+    viewManager.setCarts(this.carts)
   }
 
   override fun updateCarts(carts: Iterable<Cart>) {
@@ -67,28 +67,28 @@ class ModelManager : IModelManager {
     }
 
     if (updatedCarts.isNotEmpty()) {
-      uiManager.updateCarts(updatedCarts)
+      viewManager.updateCarts(updatedCarts)
       updateSummary()
     }
   }
 
   override fun removeCart(uid: String) {
     carts = carts.filter { it.uid != uid }
-    uiManager.removeCart(uid)
+    viewManager.removeCart(uid)
     updateSummary()
   }
 
   override fun addCarts(carts: Iterable<RawCart>) {
     val cartsToAdd = carts.map { fromRawCart(it) }
     this.carts = this.carts + cartsToAdd
-    uiManager.addCarts(cartsToAdd)
+    viewManager.addCarts(cartsToAdd)
     updateSummary()
   }
 
   private fun updateSummary() {
     summary = calcSummary(carts)
     // TODO
-    uiManager.repaint()
+    viewManager.repaint()
   }
 
   private fun fromRawCart(rawCart: RawCart): Cart {

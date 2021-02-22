@@ -3,7 +3,8 @@ package com.itemcarts.ui.cartsview
 import com.itemcarts.Cart
 import com.itemcarts.ModelManager
 import com.itemcarts.ontoEDT
-import com.itemcarts.ui.UiManager
+import com.itemcarts.ui.MainNavRow
+import com.itemcarts.ui.ViewManager
 import net.runelite.client.ui.ColorScheme
 import net.runelite.client.ui.components.CustomScrollBarUI
 import java.awt.BorderLayout
@@ -11,10 +12,7 @@ import java.awt.Dimension
 import javax.inject.Inject
 import javax.inject.Provider
 import javax.inject.Singleton
-import javax.swing.BoxLayout
-import javax.swing.JPanel
-import javax.swing.JScrollPane
-import javax.swing.JTextArea
+import javax.swing.*
 import javax.swing.border.EmptyBorder
 
 interface ICartsViewManager {
@@ -38,7 +36,7 @@ class CartsViewManager : ICartsViewManager {
 
   @Inject
   // Provider breaks a circular dependency
-  private lateinit var uiManager: Provider<UiManager>
+  private lateinit var viewManager: Provider<ViewManager>
 
   private val cartsListPanel = JPanel()
   private val expandedCarts = mutableSetOf<String>()
@@ -47,8 +45,10 @@ class CartsViewManager : ICartsViewManager {
 
   init {
     val ctrlPanel = JPanel()
+    ctrlPanel.layout = BoxLayout(ctrlPanel, BoxLayout.Y_AXIS)
     ctrlPanel.background = ColorScheme.DARK_GRAY_COLOR
-    ctrlPanel.add(JTextArea())
+    ctrlPanel.border = EmptyBorder(8, 0, 8, 0)
+    ctrlPanel.add(MainNavRow())
 
     val cartsListWrapper = JPanel(BorderLayout())
     val filler = JPanel()
@@ -61,7 +61,7 @@ class CartsViewManager : ICartsViewManager {
     scrollPane.border = EmptyBorder(0, 0, 0, 0)
 
     cartsListPanel.background = ColorScheme.DARK_GRAY_COLOR
-    cartsListPanel.border = EmptyBorder(0, 4, 0, 4)
+    cartsListPanel.border = EmptyBorder(0, 8, 0, 8)
     cartsListPanel.layout = BoxLayout(cartsListPanel, BoxLayout.Y_AXIS)
 
     cartsListWrapper.add(cartsListPanel, BorderLayout.NORTH)
@@ -112,5 +112,5 @@ class CartsViewManager : ICartsViewManager {
   }
 
   private fun renderCart(cart: Cart) =
-    CartPanel(uiManager.get(), modelManager, cart, expandedCarts)
+    CartPanel(viewManager.get(), modelManager, cart, expandedCarts)
 }

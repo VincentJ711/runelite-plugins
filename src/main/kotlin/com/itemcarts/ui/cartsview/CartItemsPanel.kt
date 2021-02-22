@@ -15,10 +15,12 @@ import javax.swing.border.EmptyBorder
 class CartItemsPanel(cart: Cart) : JPanel(GridLayout(1, 2, 2, 0)) {
   companion object {
     private val numberLabelFont: Font
+    private val itemNameLabelFont: Font
 
     init {
       val x = JLabel()
       numberLabelFont = Font(x.font.name, x.font.style, 14)
+      itemNameLabelFont = numberLabelFont
     }
   }
 
@@ -60,8 +62,9 @@ class CartItemsPanel(cart: Cart) : JPanel(GridLayout(1, 2, 2, 0)) {
   }
 
   private fun itemNameLabel(name: String): JLabel {
-    val label = JLabel(name)
+    val label = JLabel("$name ") // last letter gets cut off at font size 14
     label.foreground = TEXT_SECONDARY
+    label.font = itemNameLabelFont
     return label
   }
 
