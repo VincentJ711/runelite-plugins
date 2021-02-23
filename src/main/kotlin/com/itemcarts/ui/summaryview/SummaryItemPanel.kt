@@ -2,12 +2,13 @@ package com.itemcarts.ui.summaryview
 
 import com.itemcarts.SummaryItem
 import com.itemcarts.ui.*
-import com.itemcarts.ui.cartsview.CartItemsPanel
 import net.runelite.client.ui.ColorScheme
-import net.runelite.client.util.QuantityFormatter.quantityToStackSize as fmtShort
+import net.runelite.client.ui.FontManager
 import net.runelite.client.util.QuantityFormatter.formatNumber as fmtLong
+import net.runelite.client.util.QuantityFormatter.quantityToStackSize as fmtShort
 import java.awt.BorderLayout
 import java.awt.Dimension
+import java.awt.Font
 import javax.swing.BoxLayout
 import javax.swing.JLabel
 import javax.swing.JPanel
@@ -15,8 +16,14 @@ import javax.swing.border.EmptyBorder
 
 class SummaryItemPanel(item: SummaryItem) : JPanel(BorderLayout()) {
   companion object {
-    val numLabelSize = Dimension(48, 20)
+    val numLabelSize = Dimension(36, 20)
     val statusBtnSize = Dimension(20, 20)
+    private val labelFont: Font
+
+    init {
+      val rsFont = FontManager.getRunescapeFont()
+      labelFont = Font(rsFont.name, rsFont.style, 16)
+    }
   }
 
   private val statusBtn = IconButton(
@@ -40,22 +47,25 @@ class SummaryItemPanel(item: SummaryItem) : JPanel(BorderLayout()) {
     val current = JLabel(fmtShort(item.currentAmt))
     val required = JLabel(fmtShort(item.requiredAmt))
 
+    name.foreground = TEXT_SECONDARY
     name.preferredSize = Dimension(0, 0)
-    name.font = CartItemsPanel.itemNameLabelFont
+    name.font = labelFont
 
     if (item.name.length > 14) {
       name.toolTipText = item.name
     }
 
+    current.foreground = TEXT_SECONDARY
     current.preferredSize = numLabelSize
     current.maximumSize = numLabelSize
     current.toolTipText = fmtLong(item.currentAmt)
-    current.font = CartItemsPanel.numberLabelFont
+    current.font = labelFont
 
+    required.foreground = TEXT_SECONDARY
     required.preferredSize = numLabelSize
     required.maximumSize = numLabelSize
     required.toolTipText = fmtLong(item.requiredAmt)
-    required.font = CartItemsPanel.numberLabelFont
+    required.font = labelFont
 
     statusBtn.preferredSize = statusBtnSize
     statusBtn.maximumSize = statusBtnSize

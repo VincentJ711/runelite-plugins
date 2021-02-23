@@ -49,7 +49,9 @@ class ItemCartsPlugin : Plugin() {
 
     modelManager.setCarts((1 until 3).map {
       RawCart(
-        "cart #${it}", (1 until 100).map { n -> RawCartItem("$n", 1, 1) }
+        "cart #${it}", (1 until 100).map { n ->
+          RawCartItem("$n ok wowowowoowowowowoowow wowow", 1, 1)
+        }
       )
     })
   }

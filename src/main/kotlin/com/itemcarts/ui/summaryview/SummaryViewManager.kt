@@ -27,14 +27,17 @@ class SummaryViewManager @Inject constructor(
 ) : ISummaryViewManager {
   val rootPanel = JPanel(BorderLayout())
   private val itemsListPanel = JPanel()
-  private val header = SummaryItemHeaderPanel()
 
   init {
+    val header = SummaryItemHeaderPanel()
+    header.border = EmptyBorder(8, 8, 0, 8)
+
     val ctrlPanel = JPanel()
     ctrlPanel.layout = BoxLayout(ctrlPanel, BoxLayout.Y_AXIS)
     ctrlPanel.background = ColorScheme.DARK_GRAY_COLOR
     ctrlPanel.border = EmptyBorder(8, 0, 8, 0)
     ctrlPanel.add(MainNavRow { viewManager.get() })
+    ctrlPanel.add(header)
 
     val itemsListPanelWrapper = JPanel(BorderLayout())
     val filler = JPanel()
@@ -59,7 +62,6 @@ class SummaryViewManager @Inject constructor(
 
   override fun updateSummary(summary: Collection<SummaryItem>) = ontoEDT {
     itemsListPanel.removeAll()
-    itemsListPanel.add(header)
     summary.forEach { item -> itemsListPanel.add(SummaryItemPanel(item)) }
   }
 }

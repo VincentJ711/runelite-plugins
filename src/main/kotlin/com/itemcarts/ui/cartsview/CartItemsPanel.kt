@@ -14,8 +14,8 @@ import javax.swing.border.EmptyBorder
 
 class CartItemsPanel(cart: Cart) : JPanel(GridLayout(1, 2, 2, 0)) {
   companion object {
-    val numberLabelFont: Font
-    val itemNameLabelFont: Font
+    private val numberLabelFont: Font
+    private val itemNameLabelFont: Font
 
     init {
       val x = JLabel()
