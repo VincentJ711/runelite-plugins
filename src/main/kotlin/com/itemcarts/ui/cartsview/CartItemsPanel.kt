@@ -3,7 +3,9 @@ package com.itemcarts.ui.cartsview
 import com.itemcarts.Cart
 import com.itemcarts.CartItem
 import com.itemcarts.ui.TEXT_SECONDARY
-import net.runelite.client.util.QuantityFormatter
+import net.runelite.client.ui.FontManager
+import net.runelite.client.util.QuantityFormatter.formatNumber as fmtLong
+import net.runelite.client.util.QuantityFormatter.quantityToStackSize as fmtShort
 import java.awt.Dimension
 import java.awt.Font
 import java.awt.GridLayout
@@ -18,8 +20,8 @@ class CartItemsPanel(cart: Cart) : JPanel(GridLayout(1, 2, 2, 0)) {
     private val itemNameLabelFont: Font
 
     init {
-      val x = JLabel()
-      numberLabelFont = Font(x.font.name, x.font.style, 14)
+      val rsFont = FontManager.getRunescapeFont()
+      numberLabelFont = Font(rsFont.name, rsFont.style, 16)
       itemNameLabelFont = numberLabelFont
     }
   }
@@ -75,16 +77,14 @@ class CartItemsPanel(cart: Cart) : JPanel(GridLayout(1, 2, 2, 0)) {
 
   private fun numberLabel(item: CartItem, required: Boolean): JLabel {
     val chosen = if (required) item.requiredAmt else item.currentAmt
-    val label = JLabel(QuantityFormatter.quantityToStackSize(chosen) + " ")
+    val label = JLabel(fmtShort(chosen))
 
     label.foreground = TEXT_SECONDARY
     label.font = numberLabelFont
-    label.toolTipText = fmt(chosen) +
+    label.toolTipText = fmtLong(chosen) +
         if (!required) ""
-        else " = ${fmt(item.reusableAmt)} + ${fmt(item.consumableAmt)}"
+        else " = ${fmtLong(item.reusableAmt)} + ${fmtLong(item.consumableAmt)}"
 
     return label
   }
-
-  private fun fmt(n: Long): String = QuantityFormatter.formatNumber(n)
 }
