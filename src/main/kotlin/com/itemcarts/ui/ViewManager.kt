@@ -8,9 +8,15 @@ import com.itemcarts.ui.cartview.CartViewManager
 import com.itemcarts.ui.cartview.ICartViewManager
 import com.itemcarts.ui.summaryview.ISummaryViewManager
 import com.itemcarts.ui.summaryview.SummaryViewManager
-import java.awt.BorderLayout
+import java.awt.CardLayout
 import javax.inject.Inject
 import javax.inject.Singleton
+
+enum class View {
+  CARTS,
+  CART,
+  SUMMARY
+}
 
 interface IUiManager {
   /** takes you to the carts view */
@@ -27,12 +33,6 @@ interface IUiManager {
 
   /** repaints the root plugin panel */
   fun repaint()
-}
-
-enum class View {
-  CARTS,
-  CART,
-  SUMMARY
 }
 
 /**
@@ -74,12 +74,13 @@ class ViewManager @Inject constructor(
     }
   }
 
-  // private var currentView = View.SUMMARY
   private var currentView = View.CARTS
 
   init {
-    // pluginPanel.add(summaryViewManager.rootPanel, BorderLayout.CENTER)
-    pluginPanel.add(cartsViewManager.rootPanel, BorderLayout.CENTER)
+    pluginPanel.layout = CardLayout()
+    pluginPanel.add(summaryViewManager.rootPanel, View.SUMMARY.toString())
+    pluginPanel.add(cartsViewManager.rootPanel, View.CARTS.toString())
+    (pluginPanel.layout as CardLayout).show(pluginPanel, View.CARTS.toString())
   }
 
   override fun goToCartsView() = setView(View.CARTS)
@@ -104,17 +105,11 @@ class ViewManager @Inject constructor(
       return@ontoEDT
     }
 
-    val panel = when (nextView) {
-      View.CARTS -> cartsViewManager.rootPanel
-      View.SUMMARY -> summaryViewManager.rootPanel
-      else -> {
-        TODO("NOT IMPLEMENTED")
-      }
-    }
-
+    // using CardLayout has a huge performace boost over
+    // using a diff layout and executing removeAll on pluginpanel
+    // and then adding the other view.
+    (pluginPanel.layout as CardLayout).show(pluginPanel, "$nextView")
     currentView = nextView
-    pluginPanel.removeAll()
-    pluginPanel.add(panel, BorderLayout.CENTER)
     viewChangeListeners.forEach { it.onViewChanged(nextView) }
     repaint()
   }

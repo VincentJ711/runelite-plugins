@@ -16,7 +16,9 @@ data class LabelButtonOpts(
   val textColor: Color = ColorScheme.BRAND_ORANGE_TRANSPARENT,
   val textHoverColor: Color = ColorScheme.BRAND_ORANGE,
   val requireDoubleClick: Boolean = false,
-  var onClick: (() -> Unit)? = null
+
+  /** if null, no need to call onBeforeDestroy */
+  val onClick: (() -> Unit)? = null
 )
 
 open class LabelButton(
@@ -30,7 +32,9 @@ open class LabelButton(
     foreground = opts.textColor
     isOpaque = true
     toolTipText = opts.tooltipText
-    addMouseListener(adapter)
+    if (opts.onClick != null) {
+      addMouseListener(adapter)
+    }
   }
 
   override fun onBeforeDestroy() = removeMouseListener(adapter)
