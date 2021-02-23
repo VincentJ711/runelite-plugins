@@ -35,10 +35,13 @@ open class LabelButton(
 
   override fun onBeforeDestroy() = removeMouseListener(adapter)
 
-  private fun onHoverChanged(hovering: Boolean) {
+  /** sets bg/fg colors accordingly */
+  fun refreshColors(hovering: Boolean) {
     foreground = if (hovering) opts.textHoverColor else opts.textColor
     background = if (hovering) opts.bgHoverColor else opts.bgColor
   }
+
+  private fun onHoverChanged(hovering: Boolean) = refreshColors(hovering)
 
   private inner class Adapter : MouseAdapter() {
     private var lastClickTime = System.currentTimeMillis()

@@ -30,14 +30,10 @@ interface ICartsViewManager {
 }
 
 @Singleton
-class CartsViewManager : ICartsViewManager {
-  @Inject
-  private lateinit var modelManager: ModelManager
-
-  @Inject
-  // Provider breaks a circular dependency
-  private lateinit var viewManager: Provider<ViewManager>
-
+class CartsViewManager @Inject constructor(
+  private val modelManager: ModelManager,
+  private val viewManager: Provider<ViewManager>
+) : ICartsViewManager {
   private val cartsListPanel = JPanel()
   private val expandedCarts = mutableSetOf<String>()
   private val cartComponents = mutableMapOf<String, CartPanel>()
@@ -48,7 +44,7 @@ class CartsViewManager : ICartsViewManager {
     ctrlPanel.layout = BoxLayout(ctrlPanel, BoxLayout.Y_AXIS)
     ctrlPanel.background = ColorScheme.DARK_GRAY_COLOR
     ctrlPanel.border = EmptyBorder(8, 0, 8, 0)
-    ctrlPanel.add(MainNavRow())
+    ctrlPanel.add(MainNavRow { viewManager.get() })
 
     val cartsListWrapper = JPanel(BorderLayout())
     val filler = JPanel()

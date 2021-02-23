@@ -42,11 +42,24 @@ class DeleteCartButton(onClick: () -> Unit) : IconButton(
   )
 )
 
-class EditCartButton(onClick: () -> Unit) : IconButton(
+class EditCartButton(onClick: () -> Unit) : ViewChangeListener, IconButton(
   LabelButtonOpts(
     text = "✎",
     textColor = TEXT_DISABLED,
     tooltipText = "Edit Cart",
     onClick = onClick
   )
-)
+) {
+  init {
+    ViewManager.addViewChangeListener(this)
+  }
+
+  override fun onBeforeDestroy() {
+    super.onBeforeDestroy()
+    ViewManager.removeViewChangeListener(this)
+  }
+
+  override fun onViewChanged(latestView: View) {
+    refreshColors(false)
+  }
+}

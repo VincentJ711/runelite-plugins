@@ -3,17 +3,15 @@ package com.itemcarts.ui
 import net.runelite.client.ui.ColorScheme
 import java.awt.Component
 import java.awt.Dimension
-import javax.inject.Inject
-import javax.inject.Provider
 import javax.swing.Box
 import javax.swing.BoxLayout
 import javax.swing.JPanel
 import javax.swing.border.EmptyBorder
 import javax.swing.border.MatteBorder
 
-class MainNavRow : JPanel(), Destroyable {
-  @Inject
-  private lateinit var viewManager: Provider<ViewManager>
+class MainNavRow(
+  private val viewManager: () -> ViewManager
+) : JPanel(), Destroyable, ViewChangeListener {
 
   private val cartsBtn = LabelButton(
     LabelButtonOpts(
@@ -21,7 +19,7 @@ class MainNavRow : JPanel(), Destroyable {
       bgColor = ColorScheme.DARKER_GRAY_COLOR,
       bgHoverColor = ColorScheme.DARKER_GRAY_HOVER_COLOR,
       textColor = TEXT_PRIMARY,
-      onClick = { toCarts() }
+      onClick = { viewManager().goToCartsView() }
     )
   )
 
@@ -31,7 +29,7 @@ class MainNavRow : JPanel(), Destroyable {
       bgColor = ColorScheme.DARKER_GRAY_COLOR,
       bgHoverColor = ColorScheme.DARKER_GRAY_HOVER_COLOR,
       textColor = TEXT_PRIMARY,
-      onClick = { toSummary() }
+      onClick = { viewManager().goToSummaryView() }
     )
   )
 
@@ -53,26 +51,31 @@ class MainNavRow : JPanel(), Destroyable {
     summaryBtn.minimumSize = Dimension(72, 32)
     summaryBtn.preferredSize = Dimension(72, 32)
     summaryBtn.maximumSize = Dimension(72, 32)
+    summaryBtn.border = noBorder
 
     add(cartsBtn)
     add(Box.createHorizontalStrut(8))
     add(summaryBtn)
-  }
-
-  private fun toCarts() {
-    cartsBtn.border = selectedBorder
-    summaryBtn.border = noBorder
-    viewManager.get().goToCartsView()
-  }
-
-  private fun toSummary() {
-    cartsBtn.border = noBorder
-    summaryBtn.border = selectedBorder
-    viewManager.get().goToSummaryView()
+    ViewManager.addViewChangeListener(this)
   }
 
   override fun onBeforeDestroy() {
     cartsBtn.onBeforeDestroy()
     summaryBtn.onBeforeDestroy()
+    ViewManager.removeViewChangeListener(this)
+  }
+
+  override fun onViewChanged(latestView: View) {
+    if (latestView == View.CARTS) {
+      cartsBtn.border = selectedBorder
+      summaryBtn.border = noBorder
+      cartsBtn.refreshColors(true)
+      summaryBtn.refreshColors(false)
+    } else if (latestView == View.SUMMARY) {
+      summaryBtn.border = selectedBorder
+      cartsBtn.border = noBorder
+      summaryBtn.refreshColors(true)
+      cartsBtn.refreshColors(false)
+    }
   }
 }
