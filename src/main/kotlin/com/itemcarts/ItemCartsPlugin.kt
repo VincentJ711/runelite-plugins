@@ -47,12 +47,9 @@ class ItemCartsPlugin : Plugin() {
     navButton = createNavButton()
     clientToolbar.addNavigation(navButton)
 
-    modelManager.setCarts((1 until 30).map {
+    modelManager.setCarts((1 until 3).map {
       RawCart(
-        "cart #${it}", listOf(
-          RawCartItem("Abyssal Whip", 0, 10),
-          RawCartItem("this is a very long item name", 1, 1234345)
-        )
+        "cart #${it}", (1 until 100).map { n -> RawCartItem("$n", 1, 1) }
       )
     })
   }

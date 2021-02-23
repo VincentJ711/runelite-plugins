@@ -14,8 +14,8 @@ import javax.swing.border.EmptyBorder
 
 class CartItemsPanel(cart: Cart) : JPanel(GridLayout(1, 2, 2, 0)) {
   companion object {
-    private val numberLabelFont: Font
-    private val itemNameLabelFont: Font
+    val numberLabelFont: Font
+    val itemNameLabelFont: Font
 
     init {
       val x = JLabel()
@@ -25,7 +25,7 @@ class CartItemsPanel(cart: Cart) : JPanel(GridLayout(1, 2, 2, 0)) {
   }
 
   init {
-    border = EmptyBorder(0, 4, 0, 4)
+    border = EmptyBorder(0, 2, 0, 2)
 
     val nameColumn = boxPanel()
     val currAmtColumn = boxPanel()
@@ -65,12 +65,17 @@ class CartItemsPanel(cart: Cart) : JPanel(GridLayout(1, 2, 2, 0)) {
     val label = JLabel("$name ") // last letter gets cut off at font size 14
     label.foreground = TEXT_SECONDARY
     label.font = itemNameLabelFont
+
+    if (name.length > 14) {
+      label.toolTipText = name
+    }
+
     return label
   }
 
   private fun numberLabel(item: CartItem, required: Boolean): JLabel {
     val chosen = if (required) item.requiredAmt else item.currentAmt
-    val label = JLabel(QuantityFormatter.quantityToStackSize(chosen))
+    val label = JLabel(QuantityFormatter.quantityToStackSize(chosen) + " ")
 
     label.foreground = TEXT_SECONDARY
     label.font = numberLabelFont

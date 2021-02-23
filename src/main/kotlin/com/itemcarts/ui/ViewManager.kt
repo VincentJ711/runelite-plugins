@@ -74,9 +74,11 @@ class ViewManager @Inject constructor(
     }
   }
 
+  // private var currentView = View.SUMMARY
   private var currentView = View.CARTS
 
   init {
+    // pluginPanel.add(summaryViewManager.rootPanel, BorderLayout.CENTER)
     pluginPanel.add(cartsViewManager.rootPanel, BorderLayout.CENTER)
   }
 

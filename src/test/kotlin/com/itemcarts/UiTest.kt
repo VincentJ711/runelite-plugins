@@ -3,6 +3,7 @@ package com.itemcarts
 import com.google.inject.Guice
 import com.itemcarts.ui.ItemCartsPluginPanel
 import net.runelite.client.ui.FontManager
+import net.runelite.client.ui.PluginPanel
 import net.runelite.client.ui.skin.SubstanceRuneLiteLookAndFeel
 import net.runelite.client.util.SwingUtil
 import org.pushingpixels.substance.internal.SubstanceSynapse
@@ -20,7 +21,7 @@ private class UiTest : JFrame() {
 
   fun start() {
     title = "View Test"
-    setSize(500, 900)
+    setSize(PluginPanel.PANEL_WIDTH, 900)
     defaultCloseOperation = EXIT_ON_CLOSE
 
     add(rootPanel)
@@ -31,7 +32,7 @@ private class UiTest : JFrame() {
         RawCart(
           "bravo", listOf(
             RawCartItem("Abyssal Whip", 0, 10),
-            RawCartItem("Zammy Hasta", 1, 1234345)
+            RawCartItem("Zammy Hasta", 1, 5234345)
           )
         ),
         RawCart(
@@ -49,7 +50,7 @@ private class UiTest : JFrame() {
       Thread.sleep(waitTime)
       modelManager.updateItems(
         mutableMapOf(), mapOf(
-          "Abyssal Whip" to 1234L,
+          "Abyssal Whip" to 5555L,
           "Tinderbox" to 1L
         )
       )
@@ -83,14 +84,21 @@ private class UiTest : JFrame() {
 
       println("resetting carts")
       Thread.sleep(waitTime)
-      modelManager.setCarts((1 until 100).map {
+
+      modelManager.setCarts((1 until 3).map {
         RawCart(
-          "cart #${it}", listOf(
-            RawCartItem("Abyssal Whip", 0, 10),
-            RawCartItem("Zammy Hasta", 1, 1234345)
-          )
+          "cart #${it}", (1 until 100).map { n -> RawCartItem("$n", 1, 1) }
         )
       })
+      // modelManager.setCarts((1 until 100).map {
+      //   RawCart(
+      //     "cart #${it}", listOf(
+      //       RawCartItem("Abyssal Whip", 0, 10),
+      //       RawCartItem("Zammy Hasta", 1, 5234345),
+      //       RawCartItem("ZZZZZZZZZZZZZZZ", 1, 1)
+      //     )
+      //   )
+      // })
       // println(modelManager.uiManager)
     }.start()
   }

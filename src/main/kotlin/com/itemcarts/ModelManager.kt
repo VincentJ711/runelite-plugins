@@ -19,8 +19,7 @@ class ModelManager : IModelManager {
   private var itemsInBank = mapOf<String, Long>()
   private var itemsOnPlayer = mapOf<String, Long>()
   private var summary = mapOf<String, SummaryItem>()
-  var carts = listOf<Cart>()
-    private set
+  private var carts = listOf<Cart>()
 
   override fun updateItems(
     onPlayer: Map<String, Long>,
@@ -86,8 +85,10 @@ class ModelManager : IModelManager {
   }
 
   private fun updateSummary() {
-    summary = calcSummary(carts)
-    // TODO
+    val summaryItems = calcSummary(carts).values
+      .sortedByDescending { it.requiredAmt }
+      .sortedBy { it.completed }
+    viewManager.updateSummary(summaryItems)
     viewManager.repaint()
   }
 
